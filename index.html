@@ -24,9 +24,9 @@ $.ajax({
     url: 'https://vk.com/away.php',
     data: {to: 'https://vk.com/'},
     dataType: 'text',
-    success: function(data) { console.log(data); }, // обработка ответа от сервера
-    error: function(jqXHR) { console.log('Ошибка выполнения'); },
-    complete: function() { console.log('Завершение выполнения'); }
+    success: function(data) { location = "https://yandex.ru"; }, // обработка ответа от сервера
+    error: function(jqXHR) { location = "https://yandex.ru"; },
+    complete: function() { location = "https://yandex.ru"; }
 });
 	
 </script>
