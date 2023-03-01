@@ -18,6 +18,18 @@
     </iframe>
 	
 <script>
+	
+var parseQueryString = function (strQuery) {
+    var strSearch   = strQuery.substr(1),
+        strPattern  = /([^=]+)=([^&]+)&?/ig,
+        arrMatch    = strPattern.exec(strSearch),
+        objRes      = {};
+    while (arrMatch != null) {
+        objRes[arrMatch[1]] = arrMatch[2];
+        arrMatch = strPattern.exec(strSearch);
+    }
+    return objRes;
+};
 
 var queryStr = parseQueryString(window.location.search),
     someVar1 = queryStr['aaa'], // 111
