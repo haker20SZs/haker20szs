@@ -38,7 +38,7 @@ if($curl = curl_init()){
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 </head>
 <body>
-    <h3>Форма переводчика</h3>
+    <h3>Форма переводчика ATLORS - TEST</h3>
     <form method="POST">
 
         <p>Текст: <input type="text" name="text"/></p>
