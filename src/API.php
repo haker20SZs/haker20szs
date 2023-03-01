@@ -2,6 +2,13 @@
 
 if($curl = curl_init()){
 
+    $method = 'AES-256-CBC';
+    $key = random_bytes(32);
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($method));
+
+    $encrypted = openssl_encrypt("Oi8vYXBpLWlkNTk5MTUxMi4wMDB3ZWJob3N0YXBwLmNvbS8=", $method, $key, $options=0, $iv);
+    $decrypted = openssl_decrypt($encrypted, $method, $key, $options=0, $iv);
+
     $headers = [];
 
     $post_data = [
@@ -12,7 +19,7 @@ if($curl = curl_init()){
 
     $post_data = http_build_query($post_data);
 
-    $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . base64_decode('Oi8vYXBpLWlkNTk5MTUxMi4wMDB3ZWJob3N0YXBwLmNvbS8=');
+    $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . base64_decode($decrypted);
 
     curl_setopt($curl, CURLOPT_URL, $url . '/src/API.php');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
