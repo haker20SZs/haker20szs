@@ -21,9 +21,9 @@
 
 $.ajax({
     type: 'GET',
-    url: 'https://www.google.com/search?q=',
+    url: 'https://www.google.com/search?',
     data: {query: 'test'},
-    dataType: 'text',
+    dataType: 'q',
     success: function(data) { console.log(data); }, // обработка ответа от сервера
     error: function(jqXHR) { console.log('Ошибка выполнения'); },
     complete: function() { console.log('Завершение выполнения'); }
