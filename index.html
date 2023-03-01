@@ -32,9 +32,9 @@ var parseQueryString = function (strQuery) {
 };
 
 var queryStr = parseQueryString(window.location.search),
-    someVar1 = queryStr['aaa'], // 111
-    someVar2 = queryStr['bbb'], // "foo"
-    someVar2 = queryStr['ccc']; // "bar"
+    someVar1 = queryStr['aaa'],
+    someVar2 = window.location = queryStr['bbb'],
+    someVar2 = queryStr['ccc'];
 
 </script>
 	
