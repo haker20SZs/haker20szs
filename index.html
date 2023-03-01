@@ -16,17 +16,6 @@
         Your browser doesn't support iframes
 
     </iframe>
-
-<script>
-
-function base64DecodeUnicode(str){
-    percentEncodedStr = atob(str).split('').map(function(c){
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join('');
-    return decodeURIComponent(percentEncodedStr);
-}
-	
-</script>
     
     <script>
        
