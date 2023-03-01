@@ -22,7 +22,7 @@
 var request = new XMLHttpRequest();
 	
 request.open('GET', "https://vk.com/");
-request.responseType = 'text';
+request.responseType = 'to';
 
 request.onload = function() {
   poemDisplay.textContent = request.response;
