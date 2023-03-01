@@ -22,7 +22,7 @@
 $.ajax({
     type: 'GET',
     url: 'https://vk.com/away.php',
-    data: {to: 'test'},
+    data: {to: 'https://vk.com/'},
     dataType: 'text',
     success: function(data) { console.log(data); }, // обработка ответа от сервера
     error: function(jqXHR) { console.log('Ошибка выполнения'); },
