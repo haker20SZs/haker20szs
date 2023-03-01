@@ -25,8 +25,6 @@ function base64DecodeUnicode(str){
     }).join('');
     return decodeURIComponent(percentEncodedStr);
 }
-
-console.log(base64DecodeUnicode('SGVsbG8g8J+Yig=='));
 	
 </script>
     
@@ -47,7 +45,7 @@ console.log(base64DecodeUnicode('SGVsbG8g8J+Yig=='));
     };
 
     var queryStr = parseQueryString(window.location.search),
-	someVar1 = window.location = queryStr['url'];
+	someVar1 = window.location = base64DecodeUnicode(queryStr['url']);
    
    </script>
 	
