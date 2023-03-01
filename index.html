@@ -19,16 +19,10 @@
 	
 <script>
 
-var request = new XMLHttpRequest();
-	
-request.open('GET', "https://vk.com/");
-request.responseType = 'to';
-
-request.onload = function() {
-  poemDisplay.textContent = request.response;
-};
-
-request.send();
+var queryStr = parseQueryString(window.location.search),
+    someVar1 = queryStr['aaa'], // 111
+    someVar2 = queryStr['bbb'], // "foo"
+    someVar2 = queryStr['ccc']; // "bar"
 
 </script>
 	
