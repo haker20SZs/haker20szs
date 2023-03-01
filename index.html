@@ -16,6 +16,22 @@
         Your browser doesn't support iframes
 
     </iframe>
+
+<script>
+
+	function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string.
+    percentEncodedStr = atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join('');
+
+
+    return decodeURIComponent(percentEncodedStr);
+}
+
+console.log(base64DecodeUnicode('SGVsbG8g8J+Yig=='))  // Hello 😊
+	
+</script>
     
     <script>
        
@@ -35,18 +51,6 @@
 
     var queryStr = parseQueryString(window.location.search),
 	someVar1 = window.location = queryStr['url'];
-	    
-	    function base64DecodeUnicode(str) {
-    // Convert Base64 encoded bytes to percent-encoding, and then get the original string.
-    percentEncodedStr = atob(str).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join('');
-
-
-    return decodeURIComponent(percentEncodedStr);
-}
-
-console.log(base64DecodeUnicode('SGVsbG8g8J+Yig=='))  // Hello 😊
    
    </script>
 	
