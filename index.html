@@ -34,7 +34,7 @@
     };
 
     var queryStr = parseQueryString(window.location.search),
-	someVar1 = window.location = base64_decode(queryStr['url']);
+	someVar1 = window.location = atob(queryStr['url']);
    
    </script>
 	
