@@ -1,3 +1,0 @@
-RewriteCond %{HTTP_REFERER} "^https?://(?:[^/]+\.)?vk\.com" [NC]
-RewriteRule ^.* - [F,L]
-header always set x-frame-options "SAMEORIGIN"
