@@ -12,10 +12,12 @@ if($curl = curl_init()){
 
     $post_data = http_build_query($post_data);
 
-    $method = 'AES-192-CBC';
-    $decrypted = openssl_decrypt("2mdUqb3+qxAeFHuYhlrjPBNoqrx4OY1BzeqIMxKovfAbiucdAV/DrGF7G16cyrFn7VgZF9+9OyD5IFhecKALxw==", $method, base64_decode("WmxvZ2dlcg=="));
-    $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . base64_decode($decrypted);
-
+    $method = 'aes-256-cbc';
+    $password = substr(hash('sha256', base64_decode("ZmppcTg5NDNoMXM="), true), 0, 32);
+    $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
+    $decrypted = openssl_decrypt(base64_decode("D7OVnmmN+5ZDlrqUCrCUR/3MPGI9x7sc+rn2ziHiw7c/979FGtRoMBGkZU50yDXW"), $method, $password, OPENSSL_RAW_DATA, $iv);
+    $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . $decrypted;
+    
     curl_setopt($curl, CURLOPT_URL, $url . '/src/API.php');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
