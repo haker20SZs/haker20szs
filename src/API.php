@@ -3,18 +3,19 @@
 if($curl = curl_init()){
 
     $headers = [];
+    
+    $url = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['url']);
+    $key = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['key']);
 
     $post_data = [
         'lang' => $_POST["lang"],
         'text' => $_POST["text"],
-        'key' => "Z2ZqNDc4anM0ZGE",
+        'key' => $key,
     ];
 
     $post_data = http_build_query($post_data);
     
     $iv = chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0) . chr(0x0);
-    $url = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['url']);
-    $key = base64_decode(json_decode(file_get_contents(base64_decode("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2hha2VyMjBTWnMvaGFrZXIyMHN6cy9tYWluL3NyYy91cmwuanNvbg==")), true)['key']);
     $decrypted = openssl_decrypt($url, "aes-256-cbc", substr(hash('sha256', $key, true), 0, 32), OPENSSL_RAW_DATA, $iv);
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . $decrypted;
     
