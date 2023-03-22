@@ -31,6 +31,7 @@ if($curl = curl_init()){
     $get_text = json_decode($exec, true)['text'];
     
     curl_close($curl);
+
 }
 
 ?>
