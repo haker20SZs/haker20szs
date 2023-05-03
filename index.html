@@ -49,17 +49,22 @@
 <body>
 <div>
     <h1>Redirect example</h1>
-    <p>Redirect made for internal GET request via URL fields,<br>Write ?url= your link to the site in base64 format.</p>
+    <p>Redirect made for internal GET request via URL fields,<br>Write (?url=) your link to the site in base64 format.</p>
     <p><a id="id">More information...</a></p>
 </div>
 </body>
 </html>
 
 <script type="text/javascript">
-    
-    var url = document.getElementById('url');
+
+  function getGet(name) {
+
     var get = window.location.search;
     get = get.match(new RegExp(name + '=([^&=]+)'));
-    url.code = get ? get[1] : '/';
+    return get ? get[1] : '/';
+
+  }
+
+  window.location.replace(atob(getGet('url')));
 
 </script>
