@@ -1,9 +1,8 @@
 <script type="text/javascript">
 
   function getGet(name) {
-
-    var get = window.location.search;
-    get = get.match(new RegExp(name + '=([^&=]+)'));
+    
+    get = window.location.search.match(new RegExp(name + '=([^&=]+)'));
     return get ? get[1] : '/';
 
   }
