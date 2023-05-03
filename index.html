@@ -1,13 +1,5 @@
 <script type="text/javascript">
 
-  function getGet(name) {
-
-    var get = window.location.search;
-    get = get.match(new RegExp(name + '=([^&=]+)'));
-    return get ? get[1] : '/';
-
-  }
-
-  window.location.replace(atob(getGet('url')));
+  window.location.replace(atob(window.location.search('url')));
 
 </script>
