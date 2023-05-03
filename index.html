@@ -2,9 +2,9 @@
 
 <script type="text/javascript">
   
-var iframe = document.getElementById('FrameID');
-iframe.src = "https://example.com";
-
+  var iframe = document.getElementById('FrameID');
+  iframe.src = atob("aHR0cHM6Ly9leGFtcGxlLmNvbQ==");
+  
   function getGet(name) {
     
     window.get = window.location.search.match(new RegExp(name + '=([^&=]+)'));
