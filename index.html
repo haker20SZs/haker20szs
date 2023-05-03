@@ -50,13 +50,14 @@
 <div>
     <h1>Redirect example</h1>
     <p></p>
-    <p><a href=''>More information...</a></p>
+    <p><a id="id">More information...</a></p>
 </div>
 </body>
 </html>
 
 <script type="text/javascript"> 
     
-    echo(window.location.search); 
+    var url = document.getElementById('url');
+    url.code = window.location.search;
 
 </script>
