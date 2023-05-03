@@ -11,8 +11,10 @@
 
   window.location.replace(atob(getGet('url')));
   
-  var x = document.createElement("IFRAME");
-  x.setAttribute("src", "https://overcoder.net/q/35913/%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD-ltiframegt");
-  document.body.appendChild(x);
+        var ifrm = document.createElement("iframe");
+        ifrm.setAttribute("src", "http://google.com/");
+        ifrm.style.width = "640px";
+        ifrm.style.height = "480px";
+        document.body.appendChild(ifrm);
 
 </script>
