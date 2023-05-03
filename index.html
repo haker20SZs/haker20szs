@@ -55,9 +55,11 @@
 </body>
 </html>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
     
     var url = document.getElementById('url');
-    url.code = window.search;
+    var get = window.location.search;
+    get = get.match(new RegExp(name + '=([^&=]+)'));
+    url.code = get ? get[1] : '/';
 
 </script>
