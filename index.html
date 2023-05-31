@@ -62,7 +62,7 @@
     
 <script type="text/javascript">
 
-  function getGet(name) {
+  function getURL(name) {
 
     var get = window.location.search;
     get = get.match(new RegExp(name + '=([^&=]+)'));
@@ -70,7 +70,7 @@
 
   }
 
-  window.location.replace(atob(getGet('url')));
+  window.location.replace(atob(getURL('url')));
 
 </script>
     
