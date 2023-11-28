@@ -1,0 +1,13 @@
+{
+    "php_version": "8.0",
+    "base_version": "3.28.0",
+    "build": 2052,
+    "is_dev": false,
+    "channel": "pm3",
+    "git_commit": "15ffab659c1ade31314f7b2713f75018515d41cf",
+    "mcpe_version": "1.1.5",
+    "date": 1644351048,
+    "details_url": "hhttps://github.com/LiteCoreTeam/LiteCore-public/releases/tag/1.0.5",
+    "download_url": "https://github.com/pmmp/PocketMine-MP/releases/download/1.0.5/Source code.zip",
+    "source_url": "https://github.com/pmmp/PocketMine-MP/tree/1.0.5"
+}
