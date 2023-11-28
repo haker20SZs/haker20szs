@@ -2,7 +2,7 @@
     "php_version": "8.0",
     "channel": "pm3",
     "mcpe_version": "1.1.5",
-    "details_url": "https://github.com/haker20SZs/FastCupCore/releases/tag/Main",
-    "download_url": "https://github.com/haker20SZs/FastCupCore/archive/refs/tags/Main.zip",
-    "source_url": "https://github.com/haker20SZs/FastCupCore/tree/Main"
+    "details_url": "https://github.com/haker20SZs/FastCupCore/releases/tag/FastCupCore",
+    "download_url": "https://github.com/haker20SZs/FastCupCore/archive/refs/tags/FastCupCore.zip",
+    "source_url": "https://github.com/haker20SZs/FastCupCore/tree/FastCupCore"
 }
