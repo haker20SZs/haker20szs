@@ -1,6 +1,6 @@
 <?php
 
-    $packet = "8000";
+    $packet = "6500";
 
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
 
@@ -70,7 +70,13 @@
 
             shell_exec('tcpdump -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
 
-            $getip = shell_exec("awk '{count[$1]++} END {for (ip in count) print ip, count[ip]}' traffic.log | sort -nr -k2 | head -n 1 | awk '{print $1}'");
+            $tempFile = tempnam(sys_get_temp_dir(), 'sort');
+
+            shell_exec("awk '{count[$1]++} END {for (ip in count) print ip, count[ip]}' traffic.log | sort -nr -k2 > $tempFile");
+
+            $getip = shell_exec("head -n 1 $tempFile | awk '{print $1}'");
+
+            unlink($tempFile);
 
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
@@ -83,7 +89,13 @@
 
             shell_exec('tcpdump -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
 
-            $getip = shell_exec("awk '{count[$1]++} END {for (ip in count) print ip, count[ip]}' traffic.log | sort -nr -k2 | head -n 1 | awk '{print $1}'");
+            $tempFile = tempnam(sys_get_temp_dir(), 'sort');
+
+            shell_exec("awk '{count[$1]++} END {for (ip in count) print ip, count[ip]}' traffic.log | sort -nr -k2 > $tempFile");
+
+            $getip = shell_exec("head -n 1 $tempFile | awk '{print $1}'");
+
+            unlink($tempFile);
 
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
