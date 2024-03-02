@@ -7,12 +7,12 @@
     $filename = (__DIR__ . "/" . basename(__FILE__));
     $perms = fileperms($filename);
 
-    $whlist = array (
+    $whlist = [
 
         "127.0.0.1",
         "0.0.0.0",
 
-    );
+    ];
 
     if ($perms !== false) {
 
