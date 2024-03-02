@@ -88,7 +88,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            foreach ($whlist as $wlip) {
+            foreach ($whlist as $key => wlip) {
 
                 if (!($wlip == $ip)) {
                     
@@ -115,7 +115,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            foreach ($whlist as $wlip) {
+            foreach ($whlist as $key => wlip) {
 
                 if (!($wlip == $ip)) {
                     
