@@ -1,6 +1,6 @@
 <?php
 
-    $packet = "6500";
+    $packet = "10000";
 
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
 
@@ -68,7 +68,7 @@
 
         if ($get_cpu > (100 / $cpu_count) * 0.75) {
 
-            shell_exec('tcpdump -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
+            shell_exec('tcpdump -i ' . $interface . ' -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
 
             $tempFile = tempnam(sys_get_temp_dir(), 'sort');
 
@@ -81,13 +81,13 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("iptables -A INPUT -s " . $ip . " -j DROP");
+            shell_exec("iptables -A INPUT -s " . $ip . " -j DROP && iptables-save > /etc/iptables/rules.v4");
 
             echo("IP address blocked - " . $ip . "\n");
 
         } else if ($packetsPerSecond > $packet) {
 
-            shell_exec('tcpdump -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
+            shell_exec('tcpdump -i ' . $interface . ' -n -c ' . $packet . ' | awk \'{print $3}\' > traffic.log');
 
             $tempFile = tempnam(sys_get_temp_dir(), 'sort');
 
@@ -100,7 +100,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("iptables -A INPUT -s " . $ip . " -j DROP");
+            shell_exec("iptables -A INPUT -s " . $ip . " -j DROP && iptables-save > /etc/iptables/rules.v4");
 
             echo("IP address blocked - " . $ip . " - " . $packetsPerSecond . "\n");
 
