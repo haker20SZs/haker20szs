@@ -7,13 +7,6 @@
     $filename = (__DIR__ . "/" . basename(__FILE__));
     $perms = fileperms($filename);
 
-    $whlist = [
-
-        "127.0.0.1",
-        "0.0.0.0",
-
-    ];
-
     if ($perms !== false) {
 
         $octalPerms = substr(sprintf('%o', $perms), -4);
@@ -88,15 +81,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            foreach ($whlist as $key => $wlip) {
-
-                if (!($wlip == $ip)) {
-                    
-                    shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
-                
-                }
-
-            }
+            shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
 
             echo("IP address blocked - " . $ip . "\n");
 
@@ -114,16 +99,8 @@
 
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
-
-            foreach ($whlist as $key => $wlip) {
-
-                if (!($wlip == $ip)) {
                     
-                    shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
-                
-                }
-
-            }
+            shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
 
             echo("IP address blocked - " . $ip . " - " . $packetsPerSecond . "\n");
 
