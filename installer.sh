@@ -86,6 +86,14 @@ iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
 iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
 
+iptables -t raw -A PREROUTING -p gre -j DROP
+iptables -t raw -A PREROUTING -p esp -j DROP
+iptables -t raw -A PREROUTING -p ah -j DROP
+
+iptables -t raw -A PREROUTING -p udp --dport 22 -j DROP
+iptables -t raw -A PREROUTING -p udp --dport 80 -j DROP
+iptables -t raw -A PREROUTING -p udp --dport 443 -j DROP
+
 iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j DROP
 
@@ -129,6 +137,7 @@ iptables -A INPUT -p udp -m multiport --dports 135,137,138,139,445,1433,1434 -j 
 
 iptables -t mangle -A PREROUTING -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP
 iptables -t mangle -A PREROUTING -m conntrack --ctstate INVALID -j DROP
+iptables -t mangle -A PREROUTING -m state --state INVALID -j DROP
 
 iptables -A OUTPUT -p icmp -o ${INTERFACE} -j ACCEPT
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 5/s -j ACCEPT
@@ -137,6 +146,11 @@ iptables -A INPUT -p icmp --icmp-type destination-unreachable -s 0/0 -i ${INTERF
 iptables -A INPUT -p icmp --icmp-type time-exceeded -s 0/0 -i ${INTERFACE} -j ACCEPT
 iptables -I INPUT -p icmp --icmp-type 8 -j DROP
 iptables -A INPUT -p icmp -i ${INTERFACE} -j DROP
+
+iptables -A INPUT -i tun+ -j ACCEPT
+iptables -A FORWARD -o tun+ -j ACCEPT
+iptables -A FORWARD -i tun+ -j ACCEPT
+iptables -A OUTPUT -o tun+ -j ACCEPT
 
 iptables -A INPUT -m state --state INVALID -j DROP
 iptables -A OUTPUT -m state --state INVALID -j DROP
@@ -151,6 +165,8 @@ iptables -A INPUT -p tcp --sport 1:65535 -m limit --limit 5/s --limit-burst 1000
 iptables -A PREROUTING -t mangle -i ${INTERFACE} -j MARK --set-mark 6
 iptables -A INPUT -p tcp -m connlimit --connlimit-above 80 -j REJECT --reject-with tcp-reset
 iptables -t mangle -A PREROUTING -f -j DROP
+
+iptables -t raw -A PREROUTING -p tcp -m multiport --sports 25,67,465 -j DROP
 
 iptables-save
 
