@@ -81,7 +81,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
+            shell_exec("sudo iptables -A OUTPUT -s " . $ip . " -j DROP");
 
             echo("IP address blocked - " . $ip . "\n");
 
@@ -100,7 +100,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
                     
-            shell_exec("sudo iptables -A INPUT -s " . $ip . " -j DROP");
+            shell_exec("sudo iptables -A OUTPUT -s " . $ip . " -j DROP");
 
             echo("IP address blocked - " . $ip . " - " . $packetsPerSecond . "\n");
 
