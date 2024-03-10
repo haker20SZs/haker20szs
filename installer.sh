@@ -229,18 +229,18 @@ clear" > iptables.sh
 
 # Custom conntrack timeouts - specially against DDoS attacks.
 # --------------------------------
- net.netfilter.nf_conntrack_tcp_timeout_last_ack = 10
- net.netfilter.nf_conntrack_tcp_timeout_close = 5
- net.netfilter.nf_conntrack_tcp_timeout_close_wait = 5
- net.netfilter.nf_conntrack_tcp_timeout_time_wait = 5
- net.netfilter.nf_conntrack_tcp_timeout_syn_sent = 20
- net.netfilter.nf_conntrack_tcp_timeout_syn_recv = 20
- net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 25
- net.netfilter.nf_conntrack_tcp_timeout_unacknowledged = 20
- net.netfilter.nf_conntrack_generic_timeout = 300
- net.netfilter.nf_conntrack_udp_timeout = 10
- net.netfilter.nf_conntrack_icmp_timeout = 2
- net.netfilter.nf_conntrack_icmpv6_timeout = 3
+net.netfilter.nf_conntrack_tcp_timeout_last_ack = 10
+net.netfilter.nf_conntrack_tcp_timeout_close = 5
+net.netfilter.nf_conntrack_tcp_timeout_close_wait = 5
+net.netfilter.nf_conntrack_tcp_timeout_time_wait = 5
+net.netfilter.nf_conntrack_tcp_timeout_syn_sent = 20
+net.netfilter.nf_conntrack_tcp_timeout_syn_recv = 20
+net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 25
+net.netfilter.nf_conntrack_tcp_timeout_unacknowledged = 20
+net.netfilter.nf_conntrack_generic_timeout = 300
+net.netfilter.nf_conntrack_udp_timeout = 10
+net.netfilter.nf_conntrack_icmp_timeout = 2
+net.netfilter.nf_conntrack_icmpv6_timeout = 3
 
 # Enabling SYN-Cookies.
 # Facilitates SYN Flood DDoS mitigation.
@@ -249,64 +249,64 @@ clear" > iptables.sh
 # Caution: certain hosting providers might block syncookies.
 # Verify if your hoster enforces this. If yes, set it to '0'.
 # --------------------------------
- net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_syncookies = 1
 
 # Set custom SYN/SYN-ACK retries count.
 # Helps in TCP DDoS mitigation.
 # Try 1/1 instead of 2/2 if you have time for testing :)
 # --------------------------------
- net.ipv4.tcp_synack_retries = 2
- net.ipv4.tcp_syn_retries = 2
+net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_syn_retries = 2
 
 # Set custom NIC rmem/wmem buffer size.
 # --------------------------------
- net.core.rmem_max = 33554432
- net.core.wmem_max = 33554432
+net.core.rmem_max = 33554432
+net.core.wmem_max = 33554432
 
 # Network security hardening.
 # Usually causes problems on routers.
 # --------------------------------
- net.ipv4.conf.all.accept_redirects = 0
- net.ipv4.conf.all.secure_redirects = 0
- net.ipv4.conf.all.send_redirects = 0
- net.ipv4.conf.all.accept_source_route = 0
- net.ipv6.conf.all.accept_source_route = 0
- net.ipv6.conf.all.accept_ra = 0
- net.ipv4.conf.all.secure_redirects = 1
- net.ipv6.conf.all.drop_unsolicited_na = 1
- net.ipv6.conf.all.use_tempaddr = 2
- net.ipv4.conf.all.drop_unicast_in_l2_multicast = 1
- net.ipv6.conf.all.drop_unicast_in_l2_multicast = 1
- net.ipv6.conf.default.dad_transmits = 0
- net.ipv6.conf.default.autoconf = 0
- # net.ipv4.ip_forward = 0 # Disables ip_forward (blocks VPNs/NATs)
- # net.ipv4.ip_no_pmtu_disc = 3 # Hardened PMTU Discover Mode (usually not needed)
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_ra = 0
+net.ipv4.conf.all.secure_redirects = 1
+net.ipv6.conf.all.drop_unsolicited_na = 1
+net.ipv6.conf.all.use_tempaddr = 2
+net.ipv4.conf.all.drop_unicast_in_l2_multicast = 1
+net.ipv6.conf.all.drop_unicast_in_l2_multicast = 1
+net.ipv6.conf.default.dad_transmits = 0
+net.ipv6.conf.default.autoconf = 0
+# net.ipv4.ip_forward = 0 # Disables ip_forward (blocks VPNs/NATs)
+# net.ipv4.ip_no_pmtu_disc = 3 # Hardened PMTU Discover Mode (usually not needed)
 
 # Prevent ARP Spoofing.
 # --------------------------------
- net.ipv4.conf.all.drop_gratuitous_arp = 1
- net.ipv4.conf.all.arp_ignore = 1
- net.ipv4.conf.all.arp_filter = 1
+net.ipv4.conf.all.drop_gratuitous_arp = 1
+net.ipv4.conf.all.arp_ignore = 1
+net.ipv4.conf.all.arp_filter = 1
 
 # Disable IGMP Multicast reports.
 # --------------------------------
- net.ipv4.igmp_link_local_mcast_reports = 0
+net.ipv4.igmp_link_local_mcast_reports = 0
 
 # Overall security hardening.
 # --------------------------------
- kernel.dmesg_restrict = 1
- kernel.kptr_restrict = 1
- fs.protected_symlinks = 1
- fs.protected_hardlinks = 1
- fs.protected_fifos = 2
- fs.protected_regular = 2
- kernel.unprivileged_bpf_disabled = 1
- kernel.unprivileged_userns_clone = 0
- kernel.printk = 3 3 3 3
- net.core.bpf_jit_harden = 2
- vm.unprivileged_userfaultfd = 0
- kernel.kexec_load_disabled = 1
- #kernel.sysrq = 0 # Disables sysrq (not recommended)
+kernel.dmesg_restrict = 1
+kernel.kptr_restrict = 1
+fs.protected_symlinks = 1
+fs.protected_hardlinks = 1
+fs.protected_fifos = 2
+fs.protected_regular = 2
+kernel.unprivileged_bpf_disabled = 1
+kernel.unprivileged_userns_clone = 0
+kernel.printk = 3 3 3 3
+net.core.bpf_jit_harden = 2
+vm.unprivileged_userfaultfd = 0
+kernel.kexec_load_disabled = 1
+#kernel.sysrq = 0 # Disables sysrq (not recommended)
 
 # Performance tuning.
 # Set somaxconn to 3240000 if you have a very powerful server.
@@ -315,43 +315,43 @@ clear" > iptables.sh
 # We've also disabled checksum verification in NF because the NIC usually already calculates checksums.
 # --------------------------------
 
- kernel.sched_tunable_scaling = 1
- kernel.shmmax = 268435456
- net.ipv4.tcp_tw_reuse = 1
- vm.swappiness = 20
- net.core.somaxconn = 32000
- net.ipv4.tcp_keepalive_probes = 5
- net.netfilter.nf_conntrack_checksum = 0
- # Tweaks for very powerful servers
- # net.ipv4.tcp_max_tw_buckets = 600000000
- # net.core.netdev_max_backlog = 50000
- # net.ipv4.tcp_max_syn_backlog = 3240000
+kernel.sched_tunable_scaling = 1
+kernel.shmmax = 268435456
+net.ipv4.tcp_tw_reuse = 1
+vm.swappiness = 20
+net.core.somaxconn = 32000
+net.ipv4.tcp_keepalive_probes = 5
+net.netfilter.nf_conntrack_checksum = 0
+# Tweaks for very powerful servers
+# net.ipv4.tcp_max_tw_buckets = 600000000
+# net.core.netdev_max_backlog = 50000
+# net.ipv4.tcp_max_syn_backlog = 3240000
 
 # Set max conntrack table size.
 # --------------------------------
- net.nf_conntrack_max = 20971520
- net.netfilter.nf_conntrack_max = 20971520
+net.nf_conntrack_max = 20971520
+net.netfilter.nf_conntrack_max = 20971520
 
 # Enable ExecShield to block some remote attacks.
 # --------------------------------
- kernel.exec-shield = 2
+kernel.exec-shield = 2
 
 # Don't log bogus ICMP responses.
 # --------------------------------
- net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
 
 # Allow to use more ports as a source ones.
 # --------------------------------
- net.ipv4.ip_local_port_range=1024 65535
+net.ipv4.ip_local_port_range=1024 65535
 
 # Conntrack strict mode.
 # --------------------------------
- net.netfilter.nf_conntrack_tcp_loose = 0
+net.netfilter.nf_conntrack_tcp_loose = 0
 
 # Reverse-path filter.
 # You should set '1' to '2' if you're using an assymetric routing.
 # --------------------------------
- net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.all.rp_filter = 1
 
 # Custom ratelimit for invalid TCP packets.
 # --------------------------------
