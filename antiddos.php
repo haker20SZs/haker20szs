@@ -81,9 +81,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -A OUTPUT -s " . $ip . " -j DROP");
-
-            echo("IP address blocked - " . $ip . "\n");
+            echo("This IP address is attacking you - " . $ip . "\n");
 
         } else if ($packetsPerSecond > $packet) {
 
@@ -99,10 +97,8 @@
 
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
-                    
-            shell_exec("sudo iptables -A OUTPUT -s " . $ip . " -j DROP");
 
-            echo("IP address blocked - " . $ip . " - " . $packetsPerSecond . "\n");
+            echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
         }
 
