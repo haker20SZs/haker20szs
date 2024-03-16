@@ -80,7 +80,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP && sudo iptables-save > /etc/iptables/rules.v4");
+            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP");
 
             echo("This IP address is attacking you - " . $ip . "\n");
 
@@ -99,7 +99,7 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP && sudo iptables-save > /etc/iptables/rules.v4");
+            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP");
             
             echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
@@ -107,6 +107,6 @@
 
     }
 
-    //crontab -e || @reboot php /root/antiddos.php
+    //crontab -e || @reboot screen -dmS AntiFlood php /root/antiddos.php
 
 ?>
