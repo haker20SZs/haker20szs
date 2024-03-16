@@ -2,7 +2,12 @@
 
     $packet = "10000";
 
+    $login = "root";
+    $port = "22";
+    $password = "root";
+
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
+    $public_ip = trim(shell_exec("/sbin/ifconfig $interface | grep 'inet ' | awk '{print $2}'"));
 
     $filename = (__DIR__ . "/" . basename(__FILE__));
     $perms = fileperms($filename);
@@ -80,6 +85,25 @@
 
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
+            
+            $connection = ssh2_connect($public_ip, $port);
+            $auth = ssh2_auth_password($connection, $login, $password);
+
+            $ban_ip = ssh2_exec($connection, "sudo iptables -A INPUT -s " . $ip . " -j DROP && sudo iptables-save > /etc/iptables/rules.v4");
+
+            if ($ban_ip) {
+
+                echo("Айпи адрес был заблокирован - " . $ip);
+                
+            } else if (!$auth) {
+                
+                echo("Не удалось авторизоваться возможные проблемы:\n\n - Не верный пароль,\n - Не верный логин,\n - Сервер не доступен.");
+            
+            } else if (!$connection) {
+                
+                echo("Не удалось установить соединение с сервером.");
+            
+            }
 
             echo("This IP address is attacking you - " . $ip . "\n");
 
@@ -98,6 +122,25 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
+            $connection = ssh2_connect($public_ip, $port);
+            $auth = ssh2_auth_password($connection, $login, $password);
+
+            $ban_ip = ssh2_exec($connection, "sudo iptables -A INPUT -s " . $ip . " -j DROP && sudo iptables-save > /etc/iptables/rules.v4");
+
+            if ($ban_ip) {
+
+                echo("Айпи адрес был заблокирован - " . $ip);
+                
+            } else if (!$auth) {
+                
+                echo("Не удалось авторизоваться возможные проблемы:\n\n - Не верный пароль,\n - Не верный логин,\n - Сервер не доступен.");
+            
+            } else if (!$connection) {
+                
+                echo("Не удалось установить соединение с сервером.");
+            
+            }
+            
             echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
         }
