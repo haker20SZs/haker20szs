@@ -2,7 +2,8 @@
 
 loader='#! /bin/bash
 source <(gzip -c -d <(tail -n+"$((LINENO + 2))" "$BASH_SOURCE"));
-status="$?"; return "$status" 2> /dev/null || exit "$status"'
+status="$?"; return "$status" 2> /dev/null || exit "$status"
+'
 INTERFACE=$(ip route show default | awk '/default/ {print $5}')
 
 case "$1" in
