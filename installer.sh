@@ -42,6 +42,18 @@ case "$1" in
         iptables -t mangle -F && iptables -X
         iptables -t nat -X && iptables -t mangle -X
         iptables -Z && iptables -t nat -Z && iptables -t mangle -Z
+        iptables -F INPUT
+        
+        iptables -Z INPUT
+        iptables -P INPUT ACCEPT
+        
+        iptables -F OUTPUT
+        iptables -Z OUTPUT
+        iptables -P OUTPUT ACCEPT
+        
+        iptables -F FORWARD
+        iptables -Z FORWARD
+        iptables -P FORWARD ACCEPT
 
         echo "Crontab setup in progress."
 
@@ -112,6 +124,9 @@ iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --set
 iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 100 -j DROP
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
+
+iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 30 -j DROP
+iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
 
 iptables -A INPUT -p tcp -m tcp --syn --tcp-option 8 --dport 25565 -j REJECT
 iptables -I INPUT -p tcp --syn --dport 25565 -m connlimit --connlimit-above 3 -j DROP
