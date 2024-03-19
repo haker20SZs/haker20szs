@@ -16,6 +16,7 @@ case "$1" in
 
         echo "Package updates."
 
+        echo "nameserver 1.1.1.1" > /etc/resolv.conf >> /dev/null
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null
 
         echo "Installing modules."
