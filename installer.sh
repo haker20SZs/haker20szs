@@ -394,7 +394,7 @@ net.ipv4.ip_forward=1
         echo "Files are deleted."
 
         screen -ls | grep antiddos | cut -d. -f1 | awk '{print $1}' | xargs kill
-        apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null && apt-get autoremove >> /dev/null && rm -R antiddos.php
+        apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null && apt-get autoremove >> /dev/null
         rm -R /etc/sysctl.conf && touch /etc/sysctl.conf && chmod -R 777 /etc/sysctl.conf
         cd ddos-deflate-master && bash uninstall.sh && cd .. && rm -R ddos-deflate-master && rm -R ddos.zip && rm -R iptables.sh
         iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables -t nat -F && iptables -t mangle -F && iptables -X
