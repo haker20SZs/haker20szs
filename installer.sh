@@ -36,6 +36,17 @@ case "$1" in
         apt-get install nftables -y >> /dev/null
         apt-get install fail2ban -y >> /dev/null
 
+        systemctl stop systemd-timesyncd
+        systemctl disable systemd-timesyncd
+        
+        systemctl stop ntpd
+        systemctl disable ntpd
+        
+        systemctl stop ntp
+        systemctl disable ntp
+        
+        apt-get purge ntpdate -y
+
         echo "Network reset."
 
         iptables -t nat -F
@@ -73,6 +84,7 @@ iptables -A INPUT -p icmp -m icmp --icmp-type 8 -m limit --limit 5/second -j ACC
 iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
 iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
 iptables -A INPUT -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 5/second -j ACCEPT
+iptables -A INPUT -p tcp --tcp-flags ACK ACK -m limit --limit 1/s --limit-burst 5 -j ACCEPT
 
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' -m limit --limit 20/s --algo bm -j ACCEPT
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' --algo bm -j DROP
@@ -97,6 +109,7 @@ iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
 iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
+iptables -A INPUT -p tcp --syn -m limit --limit 1/s --limit-burst 3 -j ACCEPT
 
 iptables -t raw -A PREROUTING -p gre -j DROP
 iptables -t raw -A PREROUTING -p esp -j DROP
@@ -111,6 +124,7 @@ iptables -A INPUT -p tcp --dport 80 -j DROP
 
 iptables -A INPUT -p icmp -m state --state ESTABLISHED -j ACCEPT -m limit --limit 5/s --limit-burst 8
 iptables -A OUTPUT -p icmp -m state --state ESTABLISHED -j ACCEPT -m limit --limit 5/s --limit-burst 8
+iptables -A INPUT -p icmp -j DROP
 
 iptables -A INPUT -p udp -m limit --limit 5/s -j ACCEPT
 iptables -A INPUT -p udp -j DROP
@@ -182,6 +196,7 @@ iptables -A INPUT -p tcp -m connlimit --connlimit-above 80 -j REJECT --reject-wi
 iptables -t mangle -A PREROUTING -f -j DROP
 
 iptables -t raw -A PREROUTING -p tcp -m multiport --sports 25,67,465 -j DROP
+iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 20 -j REJECT
 
 iptables-save
 
