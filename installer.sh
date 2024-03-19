@@ -14,7 +14,7 @@ case "$1" in
 
         echo "DDoS protection is installing, please wait."
 
-        echo "nameserver 1.1.1.1" > /etc/resolv.conf >> /dev/null
+        echo "nameserver 1.1.1.1" > /etc/resolv.conf >> /dev/null #DNS Server CloudFlare - 1.1.1.1 :: 1.0.0.1
 
         echo "Package updates."
 
