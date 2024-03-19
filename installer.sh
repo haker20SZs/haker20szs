@@ -252,6 +252,7 @@ clear" > iptables.sh
         cd ddos-deflate-master >> /dev/null
         bash install.sh >> /dev/null
         systemctl start ddos >> /dev/null
+        rm -R ddos.zip >> /dev/null
 
         echo "Sysctl is configured."
 
