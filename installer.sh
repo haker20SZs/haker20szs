@@ -36,17 +36,6 @@ case "$1" in
         apt-get install nftables -y >> /dev/null
         apt-get install fail2ban -y >> /dev/null
 
-        systemctl stop systemd-timesyncd
-        systemctl disable systemd-timesyncd
-        
-        systemctl stop ntpd
-        systemctl disable ntpd
-        
-        systemctl stop ntp
-        systemctl disable ntp
-        
-        apt-get purge ntpdate -y
-
         echo "Network reset."
 
         iptables -t nat -F
