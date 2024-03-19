@@ -142,9 +142,9 @@ iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 30 -j DROP
 iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
 
-iptables -A INPUT -p tcp -m tcp --syn --tcp-option 8 --dport 25565 -j REJECT
-iptables -I INPUT -p tcp --syn --dport 25565 -m connlimit --connlimit-above 3 -j DROP
-iptables -I INPUT -p tcp --dport 25565 -m state --state NEW -m limit --limit 50/s -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --syn --tcp-option 8 --dport 22 -j REJECT
+iptables -I INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j DROP
+iptables -I INPUT -p tcp --dport 22 -m state --state NEW -m limit --limit 50/s -j ACCEPT
 
 iptables -A INPUT -p udp --dport 53 -m limit --limit 5/s -j ACCEPT
 iptables -A INPUT -p udp --dport 53 -j DROP
