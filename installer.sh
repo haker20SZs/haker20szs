@@ -14,8 +14,6 @@ case "$1" in
 
         echo "DDoS protection is installing, please wait."
 
-        echo "nameserver 1.1.1.1" > /etc/resolv.conf >> /dev/null #DNS Server CloudFlare - 1.1.1.1 :: 1.0.0.1
-
         echo "Package updates."
 
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null
@@ -254,7 +252,6 @@ clear" > iptables.sh
         cd ddos-deflate-master >> /dev/null
         bash install.sh >> /dev/null
         systemctl start ddos >> /dev/null
-        cd .. && rm -R ddos.zip >> /dev/null
 
         echo "Sysctl is configured."
 
