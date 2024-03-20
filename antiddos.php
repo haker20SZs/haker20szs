@@ -80,11 +80,19 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo route add " . $ip . "/32 dev lo");
+            $get_ban = shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
 
             //sudo route del IP
 
-            echo("This IP address is attacking you - " . $ip . "\n");
+            if ($get_ban == true) {
+                
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+
+            } else {
+
+                echo("Test");
+
+            }
 
         } else if ($packetsPerSecond > $packet) {
 
@@ -101,11 +109,19 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo route add " . $ip . "/32 dev lo");
+            $get_ban = shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
 
             //sudo route del IP
-            
-            echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+
+            if ($get_ban == true) {
+                
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+
+            } else {
+
+                echo("Test");
+
+            }
 
         }
 
