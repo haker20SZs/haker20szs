@@ -90,7 +90,7 @@
 
             } else {
 
-                echo("Test");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it.");
 
             }
 
@@ -119,7 +119,7 @@
 
             } else {
 
-                echo("Test");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it.");
 
             }
 
