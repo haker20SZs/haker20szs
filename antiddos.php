@@ -1,7 +1,8 @@
 <?php
 
-    $packet = "10000";
+    $packet = "35000";
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
+    $wl_ip = "78.46.45.78";
 
     $filename = (__DIR__ . "/" . basename(__FILE__));
     $perms = fileperms($filename);
@@ -84,13 +85,17 @@
 
             //sudo route del IP
 
-            if (!($get_ban == true)) {
+            if (!($ip == $wl_ip)) {
                 
-                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                if (!($get_ban == true)) {
+                    
+                    echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                
+                } else {
+                    
+                    echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
-            } else {
-
-                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+                }
 
             }
 
@@ -113,13 +118,17 @@
 
             //sudo route del IP
 
-            if (!($get_ban == true)) {
+            if (!($ip == $wl_ip)) {
                 
-                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                if (!($get_ban == true)) {
+                    
+                    echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                
+                } else {
+                    
+                    echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
-            } else {
-
-                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+                }
 
             }
 
