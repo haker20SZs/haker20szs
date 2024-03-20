@@ -80,7 +80,9 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP");
+            shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
+
+            //sudo route del IP/32 dev INTERFACE
 
             echo("This IP address is attacking you - " . $ip . "\n");
 
@@ -99,7 +101,9 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo iptables -t mangle -A PREROUTING -s " . $ip . " -j DROP");
+            shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
+
+            //sudo route del IP/32 dev INTERFACE
             
             echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
