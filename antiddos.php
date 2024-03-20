@@ -84,13 +84,13 @@
 
             //sudo route del IP
 
-            if ($get_ban == true) {
+            if (!($get_ban == true)) {
                 
-                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
 
             } else {
 
-                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
             }
 
@@ -113,13 +113,13 @@
 
             //sudo route del IP
 
-            if ($get_ban == true) {
+            if (!($get_ban == true)) {
                 
-                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
 
             } else {
 
-                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
             }
 
