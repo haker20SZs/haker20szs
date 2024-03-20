@@ -80,9 +80,9 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
+            shell_exec("sudo route add " . $ip . "/32 dev lo");
 
-            //sudo route del IP/32 dev INTERFACE
+            //sudo route del IP
 
             echo("This IP address is attacking you - " . $ip . "\n");
 
@@ -101,9 +101,9 @@
             $explode = explode('.', $getip);
             $ip = ($explode[0] . '.' . $explode[1] . '.' . $explode[2] . '.' . $explode[3]);
 
-            shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
+            shell_exec("sudo route add " . $ip . "/32 dev lo");
 
-            //sudo route del IP/32 dev INTERFACE
+            //sudo route del IP
             
             echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
 
