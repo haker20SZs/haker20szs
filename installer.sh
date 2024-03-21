@@ -128,8 +128,8 @@ iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --set
 iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 100 -j DROP
 iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
 
-iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string "|00 00 02 00 01|" --from 40 --to 45 --match recent --name DNST --update --seconds 600 --jump DROP
-iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string "|00 00 02 00 01|" --from 40 --to 45 --match recent --name DNST --set --jump ACCEPT
+iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --update --seconds 600 --jump DROP
+iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --set --jump ACCEPT
 
 iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 30 -j DROP
 iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
