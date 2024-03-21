@@ -2,7 +2,6 @@
 
     $packet = "35000";
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
-    $wl_ip = "78.46.45.78";
 
     $filename = (__DIR__ . "/" . basename(__FILE__));
     $perms = fileperms($filename);
@@ -84,19 +83,15 @@
             $get_ban = shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
 
             //sudo route del IP
-
-            if (!($ip == $wl_ip)) {
+            
+            if (!($get_ban == true)) {
                 
-                if (!($get_ban == true)) {
-                    
-                    echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+            
+            } else {
                 
-                } else {
-                    
-                    echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
-
-                }
-
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+            
             }
 
         } else if ($packetsPerSecond > $packet) {
@@ -117,21 +112,17 @@
             $get_ban = shell_exec("sudo route add " . $ip . "/32 dev " . $interface);
 
             //sudo route del IP
-
-            if (!($ip == $wl_ip)) {
+        
+            if (!($get_ban == true)) {
                 
-                if (!($get_ban == true)) {
-                    
-                    echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+                echo("You are being attacked from this IP address " . $ip . ", please contact support to block it." . "\n");
+            
+            } else {
                 
-                } else {
-                    
-                    echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
-
-                }
-
+                echo("This IP address is attacking you - " . $ip . " - " . $packetsPerSecond . "\n");
+            
             }
-
+            
         }
 
     }
