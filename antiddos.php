@@ -82,7 +82,7 @@
 
             if ($attackIp) {
 
-                echo("Обнаружена атака от IP " . $attackIp . "\n");
+                echo ("Обнаружена атака от IP " . $attackIp . "\n");
 
             }
 
