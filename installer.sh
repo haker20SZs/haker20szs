@@ -1,9 +1,5 @@
 #!/bin/bash
 
-loader='#! /bin/bash
-source <(gzip -c -d <(tail -n+"$((LINENO + 2))" "$BASH_SOURCE"));
-status="$?"; return "$status" 2> /dev/null || exit "$status"
-'
 INTERFACE=$(ip route show default | awk '/default/ {print $5}')
 
 case "$1" in
@@ -193,11 +189,6 @@ iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 20 -j R
 iptables-save
 
 clear" > iptables.sh
-
-        gzip -c "iptables.sh" | cat <(printf %s "$loader") - > "iptables-obfuscated.sh"
-        rm -R iptables.sh
-        chmod u+x "iptables-obfuscated.sh"
-        mv "iptables-obfuscated.sh" "iptables.sh"
 
         bash iptables.sh >> /dev/null
 
