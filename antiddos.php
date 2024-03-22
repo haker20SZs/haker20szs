@@ -82,7 +82,10 @@
 
             if ($attackIp) {
 
-                echo ("Обнаружена атака от IP " . $attackIp . "\n");
+                echo("Обнаружена атака от IP " . $attackIp . "\n");
+
+                //shell_exec("sudo ufw deny in on " . $interface . " from " . $attackIp);
+                //shell_exec("sudo iptables -A INPUT -s " . $attackIp . " -j DROP");
 
             }
 
