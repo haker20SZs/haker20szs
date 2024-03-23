@@ -1,7 +1,7 @@
 <?php
 
     $packetThreshold = "15000";
-    $packet = "1000";
+    $packet = "5000";
 
     $interface = trim(shell_exec("ip route show default | awk '/default/ {print $5}'"));
     $filename = (__DIR__ . "/" . basename(__FILE__));
