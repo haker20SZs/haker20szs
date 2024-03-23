@@ -51,15 +51,6 @@
 
         exit();
 
-    } else if (empty(shell_exec('which firewalld'))) {
-
-        //Open Port
-        // - sudo firewall-cmd --add-port=22/tcp
-
-        echo("firewalld не установлен на сервере - apt install firewalld -y && systemctl start firewalld && systemctl enable firewalld." . "\n");
-
-        exit();
-
     }
 
     echo("Защита активирована и ожидает атаки." . "\n");
@@ -110,7 +101,6 @@
                 if ($count < $packet) {
 
                     //$log = shell_exec("sudo tcpdump -i " . $interface . " 'src host {$attackIp}'");
-                    //$check_ip = shell_exec("sudo firewall-cmd --query-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
 
                     echo("Обнаружена атака от IP " . $attackIp . "\n");
 
@@ -122,11 +112,10 @@
                     shell_exec("sudo iptables -P OUTPUT DROP");
                     shell_exec("sudo iptables -P FORWARD DROP");
                     shell_exec("sudo iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT");
-                    //shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
+                    shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
                     shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");
 
-                    shell_exec("sudo firewall-cmd --permanent --add-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
-                    shell_exec("sudo firewall-cmd --reload");
+                    
 
                 }
 
