@@ -107,27 +107,23 @@
                 if ($count < $packet) {
 
                     //$log = shell_exec("sudo tcpdump -i " . $interface . " 'src host {$attackIp}'");
-                    $check_ip = shell_exec("sudo firewall-cmd --query-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
+                    //$check_ip = shell_exec("sudo firewall-cmd --query-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
 
-                    if ($check_ip == "no") {
+                    echo("Обнаружена атака от IP " . $attackIp . "\n");
 
-                        echo("Обнаружена атака от IP " . $attackIp . "\n");
+                    shell_exec("sudo ufw deny in on " . $interface . " from " . $attackIp);
+                    shell_exec("sudo ufw deny in on lo from " . $attackIp);
 
-                        shell_exec("sudo ufw deny in on " . $interface . " from " . $attackIp);
-                        shell_exec("sudo ufw deny in on lo from " . $attackIp);
+                    shell_exec("sudo iptables -A INPUT -s " . $attackIp . " -j DROP");
+                    shell_exec("sudo iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP");
+                    shell_exec("sudo iptables -P OUTPUT DROP");
+                    shell_exec("sudo iptables -P FORWARD DROP");
+                    shell_exec("sudo iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT");
+                    shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
+                    shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");
 
-                        shell_exec("sudo iptables -A INPUT -s " . $attackIp . " -j DROP");
-                        shell_exec("sudo iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP");
-                        shell_exec("sudo iptables -P OUTPUT DROP");
-                        shell_exec("sudo iptables -P FORWARD DROP");
-                        shell_exec("sudo iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT");
-                        shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
-                        shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");
-
-                        shell_exec("sudo firewall-cmd --permanent --add-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
-                        shell_exec("sudo firewall-cmd --reload");
-
-                    }
+                    shell_exec("sudo firewall-cmd --permanent --add-rich-rule='rule family='ipv4' source address='" . $attackIp . "' drop'");
+                    shell_exec("sudo firewall-cmd --reload");
 
                 }
 
