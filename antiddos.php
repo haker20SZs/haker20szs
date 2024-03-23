@@ -53,6 +53,9 @@
 
     } else if (empty(shell_exec('which firewalld'))) {
 
+        //Open Port
+        // - sudo firewall-cmd --add-port=22/tcp
+
         echo("firewalld не установлен на сервере - apt install firewalld -y && systemctl start firewalld && systemctl enable firewalld." . "\n");
 
         exit();
