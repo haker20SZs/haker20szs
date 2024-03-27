@@ -6,8 +6,8 @@ process.on('uncaughtException', () => { "Hi" });
 process.on('unhandledRejection', () => { "Hi" });
 
 if (process.argv.length <= 2) {
-    console.log(`[Usage] node cf.js <url> <time> <threads>`);
-    console.log(`[Example] node cf.js example.com 60`);
+    console.log(`[Usage] node HTTP-FLOOD.js <url> <time> <threads>`);
+    console.log(`[Example] node HTTP-FLOOD.js example.com 60`);
     console.log(`[Warning] Do not use on .edu .gov domains`);
     process.exit(-1);
 }
