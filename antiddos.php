@@ -113,9 +113,7 @@
                     shell_exec("sudo iptables -P FORWARD DROP");
                     shell_exec("sudo iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT");
                     shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
-                    shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");
-
-                    
+                    shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");                    
 
                 }
 
