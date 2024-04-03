@@ -268,19 +268,25 @@ net.ipv4.tcp_syncookies = 1
 # Helps in TCP DDoS mitigation.
 # Try 1/1 instead of 2/2 if you have time for testing :)
 # --------------------------------
-net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_synack_retries = 1
 net.ipv4.tcp_syn_retries = 2
 
 # Set custom NIC rmem/wmem buffer size.
 # --------------------------------
-net.core.rmem_max = 33554432
-net.core.wmem_max = 33554432
+net.core.rmem_max = 996777216
+net.core.wmem_max = 996777216
+
+net.ipv4.tcp_rmem = 4096 87380 4194304
+net.ipv4.tcp_mem = 786432 1048576 996777216
+net.ipv4.tcp_wmem = 4096 87380 4194304
+net.ipv4.tcp_max_orphans = 2255360
 
 # Network security hardening.
 # Usually causes problems on routers.
 # --------------------------------
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.all.accept_source_route = 0
 net.ipv6.conf.all.accept_source_route = 0
@@ -329,16 +335,17 @@ kernel.kexec_load_disabled = 1
 # --------------------------------
 
 kernel.sched_tunable_scaling = 1
-kernel.shmmax = 268435456
 net.ipv4.tcp_tw_reuse = 1
 vm.swappiness = 20
-net.core.somaxconn = 32000
+net.core.somaxconn = 16096
 net.ipv4.tcp_keepalive_probes = 5
 net.netfilter.nf_conntrack_checksum = 0
 # Tweaks for very powerful servers
 # net.ipv4.tcp_max_tw_buckets = 600000000
-# net.core.netdev_max_backlog = 50000
-# net.ipv4.tcp_max_syn_backlog = 3240000
+net.core.netdev_max_backlog = 50000
+net.ipv4.tcp_fin_timeout = 10
+net.ipv4.tcp_keepalive_intvl = 15
+net.ipv4.tcp_max_syn_backlog = 2048
 
 # Set max conntrack table size.
 # --------------------------------
@@ -372,9 +379,14 @@ net.ipv4.tcp_invalid_ratelimit = 1000
 
 net.ipv4.ip_forward=1
 
-#net.ipv4.icmp_echo_ignore_all=1
-#net.ipv4.icmp_echo_ignore_broadcasts=1
-#net.ipv4.icmp_ignore_bogus_error_responses=1
+kernel.msgmnb = 65536
+kernel.msgmax = 65536
+kernel.shmmax = 494967295
+kernel.shmall = 268435456
+
+net.ipv4.icmp_echo_ignore_all=1
+net.ipv4.icmp_echo_ignore_broadcasts=1
+net.ipv4.icmp_ignore_bogus_error_responses=1
 
 " | tee -a /etc/sysctl.conf > /dev/null
 
