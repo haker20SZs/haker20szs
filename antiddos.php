@@ -100,20 +100,27 @@
 
                 if ($count < $packet) {
 
-                    //$log = shell_exec("sudo tcpdump -i " . $interface . " 'src host {$attackIp}'");
+                    $check_banip = shell_exec("sudo iptables -L -n | grep " . $attackIp);
 
-                    echo("Обнаружена атака от IP " . $attackIp . "\n");
+                    if (empty($check_banip)) {
 
-                    shell_exec("sudo ufw deny in on " . $interface . " from " . $attackIp);
-                    shell_exec("sudo ufw deny in on lo from " . $attackIp);
+                        echo("Обнаружена атака от IP " . $attackIp . "\n");
 
-                    shell_exec("sudo iptables -A INPUT -s " . $attackIp . " -j DROP");
-                    shell_exec("sudo iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP");
-                    shell_exec("sudo iptables -P OUTPUT DROP");
-                    shell_exec("sudo iptables -P FORWARD DROP");
-                    shell_exec("sudo iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT");
-                    shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
-                    shell_exec("sudo sh -c '/sbin/iptables-save > /etc/iptables/rules.v4'");                    
+                        shell_exec("sudo ufw deny in on " . $interface . " from " . $attackIp);
+                        shell_exec("sudo ufw deny in on lo from " . $attackIp);
+
+                        shell_exec("sudo iptables -I INPUT -s " . $attackIp . " -j DROP");
+                        shell_exec("sudo iptables -I OUTPUT -s " . $attackIp . " -j DROP");
+                        shell_exec("sudo iptables -I FORWARD -s " . $attackIp . " -j DROP");
+
+                        shell_exec("sudo iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP");
+                        shell_exec("sudo iptables -P OUTPUT DROP");
+                        shell_exec("sudo iptables -P FORWARD DROP");
+                        shell_exec("sudo iptables -t nat -A PREROUTING -s '" . $attackIp . "' -j DNAT --to-destination '" . $attackIp . "'");
+
+                        shell_exec("sudo iptables -s " . $attackIp . " -j DROP");
+
+                    }
 
                 }
 
