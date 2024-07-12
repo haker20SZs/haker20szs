@@ -31,6 +31,7 @@ case "$1" in
         apt-get install ipset-persistent -y >> /dev/null
         apt-get install nftables -y >> /dev/null
         apt-get install fail2ban -y >> /dev/null
+        apt-get install snort -y >> /dev/null
 
         echo "Network reset."
 
