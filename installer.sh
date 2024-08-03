@@ -1,5 +1,6 @@
 #!/bin/bash
 
+IP=$(ip -4 addr show $(ip route show default | awk '/default/ {print $5}') | grep inet | awk '{print $2}')
 INTERFACE=$(ip route show default | awk '/default/ {print $5}')
 
 case "$1" in
@@ -153,6 +154,9 @@ iptables -A INPUT -p udp --dport 69 -j DROP
 iptables -A INPUT -p tcp --dport 3389 -m limit --limit 5/s -j ACCEPT
 iptables -A INPUT -p tcp --dport 3389 -j DROP
 
+iptables -A INPUT -p tcp --dport 80 -m string --string 'siege' --algo bm -j DROP
+iptables -A INPUT -p tcp --dport 443 -m string --string 'siege' --algo bm -j DROP
+
 iptables -A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
 iptables -A INPUT -p udp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
 
@@ -189,6 +193,9 @@ iptables -t mangle -A PREROUTING -f -j DROP
 
 iptables -t raw -A PREROUTING -p tcp -m multiport --sports 25,67,465 -j DROP
 iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 20 -j REJECT
+
+@reboot iptables -A INPUT -p tcp -s ${IP} --dport 443 -j DROP
+@reboot iptables -A INPUT -p tcp -s ${IP} --dport 80 -j DROP
 
 iptables-save
 
