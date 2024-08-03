@@ -72,6 +72,9 @@ iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
 iptables -A INPUT -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 5/second -j ACCEPT
 iptables -A INPUT -p tcp --tcp-flags ACK ACK -m limit --limit 1/s --limit-burst 5 -j ACCEPT
 
+iptables -A INPUT -p tcp --syn -m hashlimit --hashlimit-upto 50/s --hashlimit-burst 100 --hashlimit-mode srcip --hashlimit-name syn_flood -j ACCEPT
+iptables -A INPUT -p tcp --syn -j DROP
+
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' -m limit --limit 20/s --algo bm -j ACCEPT
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' --algo bm -j DROP
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '9' -m limit --limit 20/s --algo bm -j ACCEPT
@@ -200,10 +203,12 @@ clear" > iptables.sh
         ulimit -s 256
         ulimit -i 120000
 
+        echo 1 > /proc/sys/net/ipv4/tcp_syncookies
+        echo 30 > /proc/sys/net/ipv4/tcp_syn_retries
         echo 120000 > /proc/sys/kernel/threads-max
         echo 600000 > /proc/sys/vm/max_map_count
         echo 200000 > /proc/sys/kernel/pid_max
-        echo 20000 > /proc/sys/net/ipv4/tcp_max_syn_backlog
+        echo 1024 > /proc/sys/net/ipv4/tcp_max_syn_backlog
         echo 1 > /proc/sys/net/ipv4/tcp_synack_retries
         echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
         echo 5 > /proc/sys/net/ipv4/tcp_keepalive_probes
