@@ -194,8 +194,8 @@ iptables -t mangle -A PREROUTING -f -j DROP
 iptables -t raw -A PREROUTING -p tcp -m multiport --sports 25,67,465 -j DROP
 iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 20 -j REJECT
 
-@reboot iptables -A INPUT -p tcp -s ${IP} --dport 443 -j DROP
-@reboot iptables -A INPUT -p tcp -s ${IP} --dport 80 -j DROP
+iptables -A INPUT -p tcp -s ${IP} --dport 443 -j DROP
+iptables -A INPUT -p tcp -s ${IP} --dport 80 -j DROP
 
 iptables-save
 
