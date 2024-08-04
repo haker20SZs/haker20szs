@@ -61,20 +61,20 @@ iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
 ethtool -s ${INTERFACE} duplex full speed 1000 autoneg off
 
-iptables -A INPUT -p udp -m u32 --u32 '26&0xFFFFFFFF=0xfeff' -j DROP
-iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-iptables -A INPUT -p udp --dport 1900 -j DROP
-iptables -A INPUT -p icmp -m icmp --icmp-type address-mask-request -j DROP
-iptables -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
-iptables -A INPUT -p icmp -m icmp --icmp-type 8 -m limit --limit 5/second -j ACCEPT
+iptables -A INPUT -p tcp --syn -m hashlimit --hashlimit-upto 50/s --hashlimit-burst 100 --hashlimit-mode srcip --hashlimit-name syn_flood -j ACCEPT
+iptables -A INPUT -p tcp --syn -j DROP
+iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
+iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
 
 iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
 iptables -A OUTPUT -p icmp --icmp-type echo-reply -j DROP
-iptables -A INPUT -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 5/second -j ACCEPT
-iptables -A INPUT -p tcp --tcp-flags ACK ACK -m limit --limit 1/s --limit-burst 5 -j ACCEPT
 
-iptables -A INPUT -p tcp --syn -m hashlimit --hashlimit-upto 50/s --hashlimit-burst 100 --hashlimit-mode srcip --hashlimit-name syn_flood -j ACCEPT
-iptables -A INPUT -p tcp --syn -j DROP
+iptables -A INPUT -m state --state INVALID -j DROP
+iptables -A OUTPUT -m state --state INVALID -j DROP
+iptables -A FORWARD -m state --state INVALID -j DROP
+
+iptables -A INPUT -p udp -m u32 --u32 '26&0xFFFFFFFF=0xfeff' -j DROP
+iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP
 
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' -m limit --limit 20/s --algo bm -j ACCEPT
 iptables -I INPUT -p tcp --syn --dport 1:65535 -m length --length 60 -m string --string '8@' --algo bm -j DROP
@@ -95,12 +95,6 @@ iptables -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
 iptables -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST -j DROP
 iptables -A INPUT -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
 
-iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
-iptables -t nat -A POSTROUTING -o ${INTERFACE} -j MASQUERADE
-iptables -A INPUT -p tcp --syn -m limit --limit 1/s --limit-burst 3 -j ACCEPT
-
 iptables -t raw -A PREROUTING -p gre -j DROP
 iptables -t raw -A PREROUTING -p esp -j DROP
 iptables -t raw -A PREROUTING -p ah -j DROP
@@ -109,73 +103,15 @@ iptables -t raw -A PREROUTING -p udp --dport 22 -j DROP
 iptables -t raw -A PREROUTING -p udp --dport 80 -j DROP
 iptables -t raw -A PREROUTING -p udp --dport 443 -j DROP
 
-iptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT
-iptables -A INPUT -p tcp --dport 80 -j DROP
-
-iptables -A INPUT -p icmp -m state --state ESTABLISHED -j ACCEPT -m limit --limit 5/s --limit-burst 8
-iptables -A OUTPUT -p icmp -m state --state ESTABLISHED -j ACCEPT -m limit --limit 5/s --limit-burst 8
-iptables -A INPUT -p icmp -j DROP
-
-iptables -A INPUT -p udp -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p udp -j DROP
-
-iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP
-
-iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --set
-iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 100 -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-
-iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --set
-iptables -A INPUT -p udp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 100 -j DROP
-iptables -A INPUT -p udp -m udp --dport 22 -j ACCEPT
-
-iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --update --seconds 600 --jump DROP
-iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --set --jump ACCEPT
-
-iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 30 -j DROP
-iptables -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
-
-iptables -A INPUT -p tcp -m tcp --syn --tcp-option 8 --dport 22 -j REJECT
-iptables -I INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j DROP
-iptables -I INPUT -p tcp --dport 22 -m state --state NEW -m limit --limit 50/s -j ACCEPT
-
-iptables -A INPUT -p udp --dport 53 -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p udp --dport 53 -j DROP
-
-iptables -A INPUT -p udp --dport 123 -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p udp --dport 123 -j DROP
-
-iptables -A INPUT -p udp --dport 161 -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p udp --dport 161 -j DROP
-
-iptables -A INPUT -p udp --dport 69 -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p udp --dport 69 -j DROP
-
-iptables -A INPUT -p tcp --dport 3389 -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p tcp --dport 3389 -j DROP
-
 iptables -A INPUT -p tcp --dport 80 -m string --string 'siege' --algo bm -j DROP
 iptables -A INPUT -p tcp --dport 443 -m string --string 'siege' --algo bm -j DROP
-
-iptables -A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
-iptables -A INPUT -p udp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
 
 iptables -t mangle -A PREROUTING -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP
 iptables -t mangle -A PREROUTING -m conntrack --ctstate INVALID -j DROP
 iptables -t mangle -A PREROUTING -m state --state INVALID -j DROP
 
-iptables -A OUTPUT -p icmp -o ${INTERFACE} -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 5/s -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type echo-reply -s 0/0 -i ${INTERFACE} -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type destination-unreachable -s 0/0 -i ${INTERFACE} -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type time-exceeded -s 0/0 -i ${INTERFACE} -j ACCEPT
-iptables -I INPUT -p icmp --icmp-type 8 -j DROP
-iptables -A INPUT -p icmp -i ${INTERFACE} -j DROP
-
-iptables -A INPUT -i tun+ -j ACCEPT
-iptables -A FORWARD -o tun+ -j ACCEPT
-iptables -A FORWARD -i tun+ -j ACCEPT
-iptables -A OUTPUT -o tun+ -j ACCEPT
+iptables -A INPUT -p tcp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
+iptables -A INPUT -p udp -m multiport --dports 135,137,138,139,445,1433,1434 -j DROP
 
 iptables -A INPUT -m state --state INVALID -j DROP
 iptables -A OUTPUT -m state --state INVALID -j DROP
@@ -185,14 +121,8 @@ iptables -A INPUT -m state --state NEW -p tcp --tcp-flags ALL ALL -j DROP
 iptables -A INPUT -m state --state NEW -p tcp --tcp-flags ALL NONE -j DROP
 iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntrack --ctstate NEW -j DROP
 
-iptables -A INPUT -p udp --sport 1:65535 -m limit --limit 5/s --limit-burst 1000 -j ACCEPT
-iptables -A INPUT -p tcp --sport 1:65535 -m limit --limit 5/s --limit-burst 1000 -j ACCEPT
-iptables -A PREROUTING -t mangle -i ${INTERFACE} -j MARK --set-mark 6
-iptables -A INPUT -p tcp -m connlimit --connlimit-above 80 -j REJECT --reject-with tcp-reset
-iptables -t mangle -A PREROUTING -f -j DROP
-
-iptables -t raw -A PREROUTING -p tcp -m multiport --sports 25,67,465 -j DROP
-iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 20 -j REJECT
+iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --update --seconds 600 --jump DROP
+iptables -A INPUT --in-interface ${INTERFACE} --protocol udp --dport 53 --match state --state NEW --match string --algo kmp --hex-string '|00 00 02 00 01|' --from 40 --to 45 --match recent --name DNST --set --jump ACCEPT
 
 iptables -A INPUT -p tcp -s ${IP} --dport 443 -j DROP
 iptables -A INPUT -p tcp -s ${IP} --dport 80 -j DROP
