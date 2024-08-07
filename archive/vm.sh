@@ -98,7 +98,7 @@ else
 
     echo "Installing modules."
 
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/")
+    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get install -y --no-install-recommends apt-utils")
 
     for cmd in "${cmds[@]}"; do
         ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
