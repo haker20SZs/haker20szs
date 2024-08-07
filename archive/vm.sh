@@ -39,20 +39,29 @@ ${bold}${red}===================================================================
 echo "${nc}"
 
 if [[ -f "./installed" ]]; then
+
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
+    
     function runcmd1 {
+    
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
+        
     }
+    
     function runcmd {
+    
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd1
+        
     }
+    
     runcmd
+    
 else
 
     echo "Downloading files for application"
@@ -119,17 +128,25 @@ ${bold}${red}===================================================================
 echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
+    
     function runcmd1 {
+    
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
+        
     }
+    
     function runcmd {
+    
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd1
+        
     }
+    
     runcmd
+    
 fi
