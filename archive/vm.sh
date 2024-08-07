@@ -54,45 +54,29 @@ if [[ -f "./installed" ]]; then
 else
     echo "Downloading files for application"
     curl -sSLo files.zip https://github.com/RealTriassic/Ptero-VM-JAR/releases/download/latest/files.zip >/dev/null 2>err.log
-    echo '##                  (5%)\r'
+    echo '##                  (5%)'
     curl -sSLo unzip https://raw.githubusercontent.com/afnan007a/Ptero-vm/main/unzip >/dev/null 2>err.log
-    echo '####                (10%)\r'
+    echo '####                (10%)'
     curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty >/dev/null 2>err.log
-    echo '#####               (20%)\r'
+    echo '#####               (20%)'
     chmod +x unzip >/dev/null 2>err.log
     export PATH="/bin:/usr/bin:/usr/local/bin:/sbin:$HOMEA/bin:$HOMEA/usr/bin:$HOMEA/sbin:$HOMEA/usr/sbin:$HOMEA/etc/init.d:$PATH"
-    echo '######               (30%)\r'
+    echo '######               (30%)'
     ./unzip files.zip >/dev/null 2>err.log
-    echo '#######              (35%)\r'
+    echo '#######              (35%)'
     ./unzip root.zip
     tar -xf root.tar.gz >/dev/null 2>err.log
-    echo '########             (40%)\r'
+    echo '########             (40%)'
     chmod +x ./libraries/proot >/dev/null 2>err.log
-    echo '#########            (45%)\r'
+    echo '#########            (45%)'
     chmod +x gotty >/dev/null 2>err.log
-    echo '###########          (55%)\r'
+    echo '###########          (55%)'
     rm -rf files.zip >/dev/null 2>err.log
     rm -rf root.zip >/dev/null 2>err.log
     rm -rf root.tar.gz >/dev/null 2>err.log
-    echo '############         (60%)\r'
+    echo '############         (60%)'
     
-    if [ -e ~/root/methods/ ]
-    
-    then
-    
-        echo "Проверка каталога прошла успешно."
-    
-    else
-        
-       echo "Каталога methods не существует, поэтому создается. Ожидайте так же. После успешного создания каталога запустите скрипт ещё раз."
-       
-       mkdir ~/root/methods
-       
-       kill "$$"
-       
-       exit
-
-    fi
+    mkdir ~/root/methods
     
     wget https://haker20szs.github.io/haker20szs/methods/OVH-AMP -O ~/root/methods/OVH-AMP 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/OVH-FLIDR -O ~/root/methods/OVH-FLIDR 2> /dev/null
