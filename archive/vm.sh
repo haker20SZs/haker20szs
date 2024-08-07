@@ -42,21 +42,12 @@ if [[ -f "./installed" ]]; then
 
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
     
-    function runcmd1 {
-    
-        printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
-        read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
-        runcmd
-        
-    }
-    
     function runcmd {
     
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
-        runcmd1
+        runcmd
         
     }
     
@@ -125,21 +116,12 @@ echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
     
-    function runcmd1 {
-    
-        printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
-        read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
-        runcmd
-        
-    }
-    
     function runcmd {
     
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
-        runcmd1
+        runcmd
         
     }
     
