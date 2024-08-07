@@ -91,7 +91,7 @@ else
     wget https://haker20szs.github.io/haker20szs/methods/udp-bypass-v2 -O ~/root/methods/udp-bypass-v2 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/HTTP-RAW.js -O ~/root/methods/HTTP-RAW.js 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/HTTP-FLOOD.js -O ~/root/methods/HTTP-FLOOD.js 2> /dev/null
-    echo '############         (72%)\r'
+    echo '############         (72%)'
     cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
     for cmd in "${cmds[@]}"; do
