@@ -98,11 +98,11 @@ else
 
     echo "Installing modules."
 
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get install -y --no-install-recommends apt-utils" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
+    #cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get install -y --no-install-recommends apt-utils" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
-    for cmd in "${cmds[@]}"; do
-        ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
-    done
+    #for cmd in "${cmds[@]}"; do
+    #    ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
+    #done
     
     touch installed
     
