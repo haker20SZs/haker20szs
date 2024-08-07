@@ -82,11 +82,12 @@ else
     rm -rf ngrok.zip >/dev/null 2>err.log
     echo -ne '############         (60%)\r'
 
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "mv ngrok /usr/bin/" "curl -o /root/installer_ddos.sh https://api.whost.su/tg/installer_ddos.sh" "apt-get -y update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
+    #cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "mv ngrok /usr/bin/" "curl -o /root/installer_ddos.sh https://api.whost.su/tg/installer_ddos.sh" "apt-get -y update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
-    for cmd in "${cmds[@]}"; do
-        ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
-    done
+    #for cmd in "${cmds[@]}"; do
+    #    ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
+    #done
+    
     echo -ne '####################(100%)\r'
     echo -ne '\n'
     touch installed
