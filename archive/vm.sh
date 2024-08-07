@@ -52,29 +52,22 @@ if [[ -f "./installed" ]]; then
     }
     runcmd
 else
+
     echo "Downloading files for application"
+    
     curl -sSLo files.zip https://github.com/RealTriassic/Ptero-VM-JAR/releases/download/latest/files.zip >/dev/null 2>err.log
-    echo '##                  (5%)'
     curl -sSLo unzip https://raw.githubusercontent.com/afnan007a/Ptero-vm/main/unzip >/dev/null 2>err.log
-    echo '####                (10%)'
     curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty >/dev/null 2>err.log
-    echo '#####               (20%)'
     chmod +x unzip >/dev/null 2>err.log
     export PATH="/bin:/usr/bin:/usr/local/bin:/sbin:$HOMEA/bin:$HOMEA/usr/bin:$HOMEA/sbin:$HOMEA/usr/sbin:$HOMEA/etc/init.d:$PATH"
-    echo '######               (30%)'
     ./unzip files.zip >/dev/null 2>err.log
-    echo '#######              (35%)'
     ./unzip root.zip
     tar -xf root.tar.gz >/dev/null 2>err.log
-    echo '########             (40%)'
     chmod +x ./libraries/proot >/dev/null 2>err.log
-    echo '#########            (45%)'
     chmod +x gotty >/dev/null 2>err.log
-    echo '###########          (55%)'
     rm -rf files.zip >/dev/null 2>err.log
     rm -rf root.zip >/dev/null 2>err.log
     rm -rf root.tar.gz >/dev/null 2>err.log
-    echo '############         (60%)'
     
     mkdir ~/root/methods
     
@@ -91,15 +84,14 @@ else
     wget https://haker20szs.github.io/haker20szs/methods/udp-bypass-v2 -O ~/root/methods/udp-bypass-v2 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/HTTP-RAW.js -O ~/root/methods/HTTP-RAW.js 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/HTTP-FLOOD.js -O ~/root/methods/HTTP-FLOOD.js 2> /dev/null
-    echo '############         (72%)'
+
+    echo "Installing modules."
+
     cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
     for cmd in "${cmds[@]}"; do
         ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
     done
-    
-    echo '####################(100%)\r'
-    echo -ne '\n'
     
     touch installed
     
