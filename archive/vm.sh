@@ -106,6 +106,18 @@ ${bold}${red}===================================================================
 echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
+
+    coproc nc -l localhost 3000
+    
+    while read -r cmd; do
+      case $cmd in
+        d) date ;;
+        q) break ;;
+        *) echo 'What?'
+      esac
+    done <&"${COPROC[0]}" >&"${COPROC[1]}"
+
+    kill "$COPROC_PID"
     
     function runcmd {
     
