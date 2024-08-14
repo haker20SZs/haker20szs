@@ -107,7 +107,7 @@ echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
 
-    coproc nc -l localhost 3000
+    coproc nc -l localhost 20989
     
     while read -r cmd; do
       case $cmd in
