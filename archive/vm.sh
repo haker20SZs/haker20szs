@@ -80,7 +80,7 @@ else
 
     echo "Installing modules."
 
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get --fix-broken install -y apt-utils && apt-get clean && apt-get -y update && apt-get -y upgrade && clear" "apt-get -y install sudo curl neofetch python3 golang perl nodejs npm nload")
+    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get --fix-broken install -y apt-utils && apt-get clean && apt-get -y update && apt-get -y upgrade && clear" "apt-get -y install sudo curl neofetch python3 golang perl nodejs npm nload php-cli")
 
     for cmd in "${cmds[@]}"; do
         ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
@@ -107,17 +107,7 @@ echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
 
-    coproc nc -l localhost 20989
-    
-    while read -r cmd; do
-      case $cmd in
-        d) date ;;
-        q) break ;;
-        *) echo 'What?'
-      esac
-    done <&"${COPROC[0]}" >&"${COPROC[1]}"
-
-    kill "$COPROC_PID"
+    php test.php
     
     function runcmd {
     
