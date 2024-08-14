@@ -107,8 +107,6 @@ echo "${nc}"
     
     echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
 
-    php test.php
-    
     function runcmd {
     
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
