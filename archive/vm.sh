@@ -56,7 +56,7 @@ if [[ -f "./installed" ]]; then
         IFS=' ' read -r -a args <<< "$cmdtorun"
             
         for arg in "${args[@]}"; do
-            echo "${arg[1]}"
+            echo "${arg}"
         done
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
