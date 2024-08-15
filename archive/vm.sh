@@ -48,6 +48,8 @@ if [[ -f "./installed" ]]; then
         read -r cmdtorun
         
         if [ "$cmdtorun" == "end" ]; then
+
+            kill "$$"
         
             exit
         
