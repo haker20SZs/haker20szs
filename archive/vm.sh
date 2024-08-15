@@ -57,6 +57,7 @@ if [[ -f "./installed" ]]; then
             target_ip=${cmdtorun[1]}
             duration=${cmdtorun[2]}
             ~/root/methods/OVH-AMP "$target_ip" "$duration"
+            echo("$target_ip" . "$duration");
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
