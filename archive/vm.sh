@@ -52,12 +52,21 @@ if [[ -f "./installed" ]]; then
             exit
         
         fi
-
-        read -a args <<< "$@"
-
-        for arg in "${args[@]}"; do
-            echo "Argument: $arg"    
-        done
+        
+        read -p "Enter a command to run: " -r cmdtorun
+        
+        if [ -n "$cmdtorun" ]; then
+        
+            IFS=' ' read -r -a args <<< "$cmdtorun"
+            
+            for arg in "${args[@]}"; do
+            
+                echo "$arg"
+            done
+            
+        else
+            echo "No command entered."
+        fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
