@@ -95,43 +95,7 @@ else
     done
     
     touch installed
-    
-    echo "
-${bold}${red}========================================================================
-                                                                                                  
 
-${bold}${lightgreen}░██╗░░░░░░░██╗███████╗░██████╗████████╗░█████╗░██╗░░░░░░█████╗░░██████╗
-${bold}${lightgreen}░██║░░██╗░░██║██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║░░░░░██╔══██╗██╔════╝
-${bold}${lightgreen}░╚██╗████╗██╔╝█████╗░░╚█████╗░░░░██║░░░███████║██║░░░░░██║░░██║╚█████╗░
-${bold}${lightgreen}░░████╔═████║░██╔══╝░░░╚═══██╗░░░██║░░░██╔══██║██║░░░░░██║░░██║░╚═══██╗
-${bold}${lightgreen}░░╚██╔╝░╚██╔╝░███████╗██████╔╝░░░██║░░░██║░░██║███████╗╚█████╔╝██████╔╝
-${bold}${lightgreen}░░░╚═╝░░░╚═╝░░╚══════╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝░╚════╝░╚═════╝░    
-                                                                                                  
-                                                                                                                
-${bold}${red}========================================================================
- "
- 
-echo "${nc}"
-    
-    echo "${bold}${lightgreen}==> ByeBye ${lightblue}Hosting${lightgreen} <=="
-
-    function runcmd {
-    
-        printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
-        read -r cmdtorun
-        
-        if [ "$cmdtorun" == "end" ]; then
-        
-            echo "✓ Success."
-            exit
-        
-        fi
-        
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
-        runcmd
-        
-    }
-    
-    runcmd
+    exit
     
 fi
