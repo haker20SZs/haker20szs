@@ -52,12 +52,16 @@ if [[ -f "./installed" ]]; then
             exit
         
         fi
+
+        if [ "$cmdtorun" == "ddos" ]; then
         
-        IFS=' ' read -r -a args <<< "$cmdtorun"
+             #IFS=' ' read -r -a args <<< "$cmdtorun"
             
-        for arg in "${args[@]}"; do
-            echo "${arg}"
-        done
+             for arg in "${cmdtorun[@]}"; do
+                echo "${arg}"
+             done
+
+        fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
