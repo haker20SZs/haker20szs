@@ -46,6 +46,14 @@ if [[ -f "./installed" ]]; then
     
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
+        
+        if [ "$cmdtorun" == "end" ]; then
+        
+            echo "✓ Success."
+            exit
+        
+        fi
+        
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
         
