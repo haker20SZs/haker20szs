@@ -56,7 +56,7 @@ if [[ -f "./installed" ]]; then
         fi
         
         if [ "$cmdtorun" == "ddos" ]; then
-            if [ ${#cmdtorun[@]} -ge 2 ]; then
+            if [ ${cmdtorun[@]} -ge 2 ]; then
                 ~/root/methods/OVH-AMP "${cmdtorun[0]}" "${cmdtorun[1]}"
             else
                 echo "Error: ddos command requires at least 2 arguments."
