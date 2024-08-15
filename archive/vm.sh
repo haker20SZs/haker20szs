@@ -54,9 +54,9 @@ if [[ -f "./installed" ]]; then
         
         fi
         
-        if [ "${cmdtorun[1]}" == "ddos" ]; then
+        if [ "${cmdtorun[0]}" == "ddos" ]; then
 
-            ~/root/methods/OVH-AMP ${cmdtorun[2]} ${cmdtorun[3]}
+            ~/root/methods/OVH-AMP ${cmdtorun[1]} ${cmdtorun[2]}
         
         fi
         
