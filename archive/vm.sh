@@ -111,6 +111,13 @@ echo "${nc}"
     
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
+        
+        if [ "$cmdtorun" == "end" ]; then
+        
+            exit
+        
+        fi
+        
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
         runcmd
         
