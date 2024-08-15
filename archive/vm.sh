@@ -60,7 +60,6 @@ if [[ -f "./installed" ]]; then
             IFS=' ' read -r -a args <<< "$cmdtorun"
             
             for arg in "${args[@]}"; do
-            
                 echo "$arg"
             done
             
