@@ -53,14 +53,12 @@ if [[ -f "./installed" ]]; then
         
         fi
 
-        if [ "$cmdtorun" == "ddos" ]; then
-        
-             #IFS=' ' read -r -a args <<< "$cmdtorun"
-            
-             for arg in "${cmdtorun[@]}"; do
-                echo "${arg}"
-             done
+        IFS=' ' read -r -a args <<< "$cmdtorun"
 
+        if [ "${args[0]}" == "ddos" ]; then
+            for arg in "${args[@]:1}"; do
+               echo "${arg}"
+            done
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
