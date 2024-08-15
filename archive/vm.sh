@@ -113,7 +113,11 @@ echo "${nc}"
         read -r cmdtorun
         
         if [ "$cmdtorun" == "end" ]; then
-        
+
+            echo -e "✓ Success."
+            
+            kill "$$"
+            
             exit
         
         fi
