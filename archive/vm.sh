@@ -57,7 +57,7 @@ if [[ -f "./installed" ]]; then
 
         if [ "${args[0]}" == "ddos" ]; then
             #for arg in "${args[@]:1}"; do
-               echo "${args[@]:1}"
+               echo "${args[1]}"
             #done
         fi
         
