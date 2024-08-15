@@ -49,8 +49,6 @@ if [[ -f "./installed" ]]; then
         
         if [ "$cmdtorun" == "end" ]; then
         
-            echo "✓ Success."
-            
             exit
         
         fi
