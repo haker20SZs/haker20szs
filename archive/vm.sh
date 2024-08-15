@@ -114,7 +114,7 @@ echo "${nc}"
         
         if [ cmdtorun == "end" ]; then
 
-            echo -e "✓ Success."
+            echo "✓ Success."
             
             kill "$$"
             
