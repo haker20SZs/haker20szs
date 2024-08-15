@@ -112,7 +112,7 @@ echo "${nc}"
         printf "${bold}${lightgreen}Zlogger${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
         
-        if [ "$cmdtorun" == "end" ]; then
+        if [ cmdtorun == "end" ]; then
 
             echo -e "✓ Success."
             
