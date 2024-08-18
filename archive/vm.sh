@@ -53,7 +53,7 @@ if [[ -f "./installed" ]]; then
         
             exit
             
-        elif [ "$input" == "s" ]; then
+        elif [ "$cmdtorun" == "stop" ]; then
 
           kill "$$"
 
