@@ -52,6 +52,12 @@ if [[ -f "./installed" ]]; then
             kill "$$"
         
             exit
+            
+        elif [ "$input" == "s" ]; then
+
+          kill "$$"
+
+          exit
         
         fi
 
@@ -60,6 +66,8 @@ if [[ -f "./installed" ]]; then
         if [ "${args[0]}" == "ddos" ]; then
 
                ./root/methods/OVH-AMP "${args[1]}" "${args[2]}"
+
+               return;
                
         fi
         
