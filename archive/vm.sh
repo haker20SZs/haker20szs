@@ -103,8 +103,9 @@ else
 
     echo "Installing modules."
 
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get install -y apt-utils && apt-get clean && apt-get -y update && apt-get -y upgrade" "apt-get -y install sudo curl python3 golang perl")
-
+    #cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get install -y apt-utils && apt-get clean && apt-get -y update && apt-get -y upgrade" "apt-get -y install sudo curl python3 golang perl")
+    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get -y upgrade" "apt-get -y install sudo curl python3 golang perl")
+    
     for cmd in "${cmds[@]}"; do
         ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
     done
