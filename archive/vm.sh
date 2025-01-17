@@ -63,7 +63,7 @@ if [[ -f "./installed" ]]; then
 
         IFS=' ' read -r -a args <<< "$cmdtorun"
 
-        if [ "${args[0]}" == "dos" ]; then
+        if [ "${args[0]}" == "gg22" ]; then
 
                ./root/methods/OVH-AMP "${args[1]}" "${args[2]}"
 
