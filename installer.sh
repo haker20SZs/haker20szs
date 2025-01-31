@@ -60,6 +60,7 @@ case "$1" in
 
         #Blocking IP addresses
         #ipset add blacklist 1.1.1.1
+        #ipset save
 
         echo "Packet limit is set."
 
