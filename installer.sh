@@ -13,10 +13,12 @@ case "$1" in
 
         echo "Package updates."
 
+        add-apt-repository ppa:ondrej/php
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null
 
         echo "Installing modules."
 
+        apt-get install php8.3-{cli,curl} -y >> /dev/null
         apt-get install curl -y >> /dev/null
         apt-get install net-tools -y >> /dev/null
         apt-get install tcpdump -y >> /dev/null
