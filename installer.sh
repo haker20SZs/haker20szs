@@ -51,16 +51,12 @@ case "$1" in
         iptables -Z FORWARD
         iptables -P FORWARD ACCEPT
 
-        echo "Creating a blacklist."
+        echo "Crontab setup in progress."
 
-        ipset create blacklist hash:ip hashsize 4096
-
-        iptables -I INPUT  -m set --match-set blacklist src -j DROP
-        iptables -I FORWARD  -m set --match-set blacklist src -j DROP
+        (crontab -l ; echo '@reboot ipset create blacklist hash:ip hashsize 4096 && sudo iptables -I INPUT  -m set --match-set blacklist src -j DROP && sudo iptables -I FORWARD  -m set --match-set blacklist src -j DROP') | crontab -
 
         #Blocking IP addresses
         #ipset add blacklist 1.1.1.1
-        #ipset save
 
         echo "Packet limit is set."
 
@@ -158,6 +154,7 @@ net.ipv4.icmp_ignore_bogus_error_responses=1
 
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null && apt-get autoremove >> /dev/null
         rm -R /etc/sysctl.conf && touch /etc/sysctl.conf && chmod -R 777 /etc/sysctl.conf
+        crontab -l | grep -vF "@reboot ipset create blacklist hash:ip hashsize 4096 && sudo iptables -I INPUT  -m set --match-set blacklist src -j DROP && sudo iptables -I FORWARD  -m set --match-set blacklist src -j DROP" | crontab -
         iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
         clear
