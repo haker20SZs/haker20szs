@@ -155,7 +155,7 @@
 
                                         ";
 
-                                        $webhook_url = 'https://discord.com/api/webhooks/1321170607986966548/Gkorg5vIgBZcY3Ph3rph0jXySSVnRR3YBD4cm7wyETAG-7AO7Tugoh4pzhgpz54AO2m4';
+                                        $webhook_url = 'URL';
 
                                         onSendMessage(str_replace("  ", "", $message), $title, $webhook_url);
 
