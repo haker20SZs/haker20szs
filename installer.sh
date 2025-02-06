@@ -65,6 +65,7 @@ case "$1" in
         ulimit -s 256
         ulimit -i 120000
 
+        echo 2500000 > /sys/module/nf_conntrack/parameters/hashsize
         echo 1 > /proc/sys/net/ipv4/tcp_syncookies
         echo 30 > /proc/sys/net/ipv4/tcp_syn_retries
         echo 120000 > /proc/sys/kernel/threads-max
@@ -111,6 +112,8 @@ net.ipv4.icmp_echo_ignore_broadcasts=1
 net.ipv4.conf.all.rp_filter=1
 net.ipv4.ip_forward=0
 
+net.netfilter.nf_conntrack_max=2000000
+net.netfilter.nf_conntrack_tcp_loose=0
 net.netfilter.nf_conntrack_tcp_timeout_last_ack=10
 net.netfilter.nf_conntrack_tcp_timeout_close=5
 net.netfilter.nf_conntrack_tcp_timeout_close_wait=5
@@ -134,6 +137,7 @@ net.ipv4.igmp_link_local_mcast_reports=0
 net.nf_conntrack_max=20971520
 net.netfilter.nf_conntrack_max=20971520
 
+net.ipv4.tcp_timestamps=1
 net.ipv4.tcp_fin_timeout=10
 net.ipv4.tcp_keepalive_intvl=15
 net.ipv4.tcp_tw_reuse=1
@@ -142,6 +146,8 @@ net.ipv4.tcp_keepalive_probes=5
 net.netfilter.nf_conntrack_checksum=0
 
 net.ipv4.icmp_ignore_bogus_error_responses=1
+
+net.ipv4.tcp_keepalive_probes=5
 
 " | tee -a /etc/sysctl.conf > /dev/null
 
