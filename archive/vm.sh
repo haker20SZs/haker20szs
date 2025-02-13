@@ -65,7 +65,7 @@ if [[ -f "./installed" ]]; then
 
         if [ "${args[0]}" == "jnts" ]; then
 
-               ./root/methods/AUTOBYPASS "${args[1]}" "${args[2]}"
+               ./root/methods/AUTOBYPASS TCP "${args[1]}" "${args[2]}" 60
 
                return;
                
