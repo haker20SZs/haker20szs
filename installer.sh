@@ -2,6 +2,7 @@
 
 IP=$(ip -4 addr show $(ip route show default | awk '/default/ {print $5}') | grep inet | awk '{print $2}')
 INTERFACE=$(ip route show default | awk '/default/ {print $5}')
+SSH_PORT=$(sshd -T | grep -iw port | awk '{print $2}')
 
 case "$1" in
 
@@ -13,12 +14,10 @@ case "$1" in
 
         echo "Package updates."
 
-        add-apt-repository ppa:ondrej/php
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null
 
         echo "Installing modules."
 
-        apt-get install php8.3-{cli,curl} -y >> /dev/null
         apt-get install curl -y >> /dev/null
         apt-get install net-tools -y >> /dev/null
         apt-get install tcpdump -y >> /dev/null
@@ -29,9 +28,7 @@ case "$1" in
         apt-get install screen -y >> /dev/null
         apt-get install unzip -y >> /dev/null
         apt-get install iptables -y >> /dev/null
-        apt-get install ipset -y >> /dev/null
         apt-get install netfilter-persistent -y >> /dev/null
-        apt-get install ipset-persistent -y >> /dev/null
         apt-get install nftables -y >> /dev/null
 
         echo "Network reset."
@@ -55,10 +52,7 @@ case "$1" in
 
         echo "Crontab setup in progress."
 
-        (crontab -l ; echo '@reboot ipset create blacklist hash:ip hashsize 4096 && sudo iptables -I INPUT  -m set --match-set blacklist src -j DROP && sudo iptables -I FORWARD  -m set --match-set blacklist src -j DROP') | crontab -
-
-        #Blocking IP addresses
-        #ipset add blacklist 1.1.1.1
+        (crontab -l ; echo '@reboot iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -I INPUT -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --set && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP && iptables -I INPUT -p tcp --dport 0:65535 -m limit --limit 10/minute -j ACCEPT') | crontab -
 
         echo "Packet limit is set."
 
@@ -92,10 +86,6 @@ case "$1" in
         for i in /proc/sys/net/ipv4/conf/*/secure_redirects; do echo 1 > "$i"; done
         for i in /proc/sys/net/ipv4/conf/*/bootp_relay; do echo 0 > "$i"; done
 
-        echo "Scripts are loading."
-
-        wget https://raw.githubusercontent.com/haker20SZs/haker20szs/refs/heads/main/ddos_logger.php -O ddos_logger.php 2> /dev/null
-
         echo "Sysctl is configured."
 
         echo -e "
@@ -110,7 +100,7 @@ net.ipv4.icmp_echo_ignore_all=1
 net.ipv4.icmp_echo_ignore_broadcasts=1
 
 net.ipv4.conf.all.rp_filter=1
-net.ipv4.ip_forward=0
+net.ipv4.ip_forward=1
 
 net.netfilter.nf_conntrack_max=2000000
 net.netfilter.nf_conntrack_tcp_loose=0
@@ -166,7 +156,7 @@ net.ipv4.tcp_keepalive_probes=5
 
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null && apt-get autoremove >> /dev/null
         rm -R /etc/sysctl.conf && touch /etc/sysctl.conf && chmod -R 777 /etc/sysctl.conf
-        crontab -l | grep -vF "@reboot ipset create blacklist hash:ip hashsize 4096 && sudo iptables -I INPUT  -m set --match-set blacklist src -j DROP && sudo iptables -I FORWARD  -m set --match-set blacklist src -j DROP" | crontab -
+        crontab -l | grep -vF "@reboot iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -I INPUT -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --set && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP && iptables -I INPUT -p tcp --dport 0:65535 -m limit --limit 10/minute -j ACCEPT" | crontab -
         iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
         clear
