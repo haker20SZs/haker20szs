@@ -30,6 +30,9 @@ case "$1" in
         apt-get install iptables -y >> /dev/null
         apt-get install netfilter-persistent -y >> /dev/null
         apt-get install nftables -y >> /dev/null
+        apt-get install iptables-persistent -y >> /dev/null
+        apt-get install conntrack -y >> /dev/null
+        apt-get install conntrackd -y >> /dev/null
 
         echo "Network reset."
 
@@ -52,7 +55,7 @@ case "$1" in
 
         echo "Crontab setup in progress."
 
-        (crontab -l ; echo '@reboot iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -I INPUT -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --set && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP') | crontab -
+        (crontab -l ; echo '@reboot iptables -t raw -I PREROUTING -p tcp --tcp-flags SYN,RST SYN,RST -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags ALL ALL -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags ALL NONE -j DROP && iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -t mangle -I PREROUTING -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -t raw -I PREROUTING -p tcp --syn --dport 0:65535 -m recent --set && iptables -t raw -I PREROUTING -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP') | crontab -
 
         echo "Packet limit is set."
 
@@ -156,7 +159,7 @@ net.ipv4.tcp_keepalive_probes=5
 
         apt-get update -y >> /dev/null && apt-get upgrade -y >> /dev/null && apt-get autoremove >> /dev/null
         rm -R /etc/sysctl.conf && touch /etc/sysctl.conf && chmod -R 777 /etc/sysctl.conf
-        crontab -l | grep -vF "@reboot iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -I INPUT -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --set && iptables -I INPUT -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP" | crontab -
+        crontab -l | grep -vF "@reboot iptables -t raw -I PREROUTING -p tcp --tcp-flags SYN,RST SYN,RST -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags ALL ALL -j DROP && iptables -t raw -I PREROUTING -p tcp --tcp-flags ALL NONE -j DROP && iptables -I INPUT -i '${INTERFACE}' -m conntrack --ctstate INVALID -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp ! --syn -m conntrack --ctstate NEW -j DROP && iptables -I INPUT -i '${INTERFACE}' -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP && iptables -t mangle -I PREROUTING -p tcp --dport '${SSH_PORT}' -m state --state NEW -m hashlimit --hashlimit-name ssh --hashlimit-mode srcip --hashlimit-above 1/sec --hashlimit-burst 5 -j DROP && iptables -t raw -I PREROUTING -p tcp --syn --dport 0:65535 -m recent --set && iptables -t raw -I PREROUTING -p tcp --syn --dport 0:65535 -m recent --update --seconds 10 --hitcount 10 -j DROP" | crontab -
         iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
         clear
