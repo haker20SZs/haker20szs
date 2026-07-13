@@ -95,16 +95,18 @@ else
     rm -rf files.zip >/dev/null 2>err.log
     rm -rf root.zip >/dev/null 2>err.log
     rm -rf root.tar.gz >/dev/null 2>err.log
-
-    chmod -R 777 ~/etc/apt/apt.conf.d/99no-check-valid-until 2> /dev/null
-    chmod -R 777 ~/etc/apt/sources.list 2> /dev/null
-
-    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
-    echo 'deb http://archive.debian.org/debian buster main contrib non-free' > /etc/apt/sources.list
-    echo 'deb http://archive.debian.org/debian-security buster/updates main contrib non-free' > /etc/apt/sources.list
     
-    apt -y clean
-    apt -y update
+./libraries/proot -S . /bin/bash <<'EOF'
+echo 'Acquire::Check-Valid-Until "false";' >/etc/apt/apt.conf.d/99no-check-valid-until
+
+cat >/etc/apt/sources.list <<EOL
+deb http://archive.debian.org/debian buster main contrib non-free
+deb http://archive.debian.org/debian-security buster/updates main contrib non-free
+EOL
+
+apt clean
+apt update
+EOF
     
     mkdir ~/root/methods
     
