@@ -106,7 +106,7 @@ EOL
 
 apt -y update
 dpkg --configure -a
-apt --fix-broken install
+apt --fix-broken install -y
 EOF
     
     mkdir ~/root/methods
