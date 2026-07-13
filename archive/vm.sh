@@ -107,8 +107,8 @@ EOF
     
     mkdir ~/root/methods
     
-    wget https://haker20szs.github.io/haker20szs/methods/AUTOBYPASS -O ~/root/methods/AUTOBYPASS 2> /dev/null
-    chmod -R 777 ~/root/methods/AUTOBYPASS 2> /dev/null
+    wget https://haker20szs.github.io/haker20szs/methods/AUTOBYPASS -O /root/methods/AUTOBYPASS 2> /dev/null
+    chmod -R 777 /root/methods/AUTOBYPASS 2> /dev/null
 
     echo "Installing modules."
 
