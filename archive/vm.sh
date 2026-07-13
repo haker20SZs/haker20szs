@@ -104,8 +104,9 @@ deb http://archive.debian.org/debian buster main contrib non-free
 deb http://archive.debian.org/debian-security buster/updates main contrib non-free
 EOL
 
-dpkg --configure -a
 apt -y update
+dpkg --configure -a
+apt --fix-broken install
 EOF
     
     mkdir ~/root/methods
