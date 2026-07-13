@@ -103,10 +103,6 @@ cat >/etc/apt/sources.list <<EOL
 deb http://archive.debian.org/debian buster main contrib non-free
 deb http://archive.debian.org/debian-security buster/updates main contrib non-free
 EOL
-
-apt -y update
-dpkg --configure -a
-apt --fix-broken install -y
 EOF
     
     mkdir ~/root/methods
@@ -117,7 +113,7 @@ EOF
     echo "Installing modules."
 
     #cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get install -y apt-utils && apt-get clean && apt-get -y update && apt-get -y upgrade" "apt-get -y install sudo curl python3 golang perl")
-    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get -y upgrade" "apt-get -y install sudo curl python3 golang perl")
+    cmds=("mv gotty /usr/bin/" "mv unzip /usr/bin/" "apt-get -y update && apt-get -y upgrade && dpkg --configure -a && apt --fix-broken install -y" "apt-get -y install sudo curl python3 golang perl")
     
     for cmd in "${cmds[@]}"; do
         ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
